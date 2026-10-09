@@ -86,3 +86,121 @@
 /* Matching gear buttons in landscape and portrait piano headers. */
 .piano-toolbar .piano-settings-button,.piano-portrait-nav .piano-settings-button{width:44px;height:44px;min-width:44px;min-height:44px;padding:0;display:grid;place-items:center;border-radius:50%;background:var(--soft);color:var(--ink);border:0;flex-shrink:0}
 .piano-portrait-nav{align-items:center;justify-content:space-between!important;gap:12px}
+
+/* Chromatic tuner and About status */
+.tuner-panel{margin:26px 0 12px;padding:24px 18px;border:1px solid var(--line);border-radius:24px;background:var(--surface);text-align:center;box-shadow:var(--shadow)}
+#tuner-status{font-size:12px;color:var(--muted);min-height:38px;margin:0}
+.tuner-note{font-size:clamp(72px,20vw,108px);font-weight:700;line-height:1.2;letter-spacing:-4px;color:var(--accent);margin:14px 0 0}
+.tuner-frequency{color:var(--muted);font-size:15px;font-variant-numeric:tabular-nums;min-height:23px}
+.tuner-meter{height:35px;position:relative;margin:32px 8px 0;border-radius:20px;background:linear-gradient(90deg,var(--soft),var(--line),var(--soft))}
+.tuner-meter-center{position:absolute;left:50%;height:100%;width:3px;background:var(--correct);transform:translateX(-50%)}
+.tuner-needle{position:absolute;left:50%;top:-7px;height:49px;width:4px;background:var(--accent);border-radius:4px;transform:translateX(-50%);transition:left .1s linear}
+.tuner-scale{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin:15px 8px}
+.tuner-cents{font-size:15px;font-weight:600;min-height:24px;margin:24px 0}
+.tuner-privacy{line-height:1.6}
+.about-detail{border-top:1px solid var(--line);padding-top:12px;margin-top:12px;font-size:13px}
+.about-detail p{margin:6px 0 9px}
+.about-detail .text-button{color:var(--accent);padding:4px 0;min-height:44px}
+
+/* Metronome */
+.metronome-panel{margin:25px 0 10px;padding:24px 20px;border:1px solid var(--line);border-radius:24px;background:var(--surface);box-shadow:var(--shadow);text-align:center}
+.metronome-tempo{display:flex;flex-direction:column;align-items:center;gap:0;margin:5px 0 20px}
+.metronome-tempo output{font-size:clamp(76px,22vw,108px);font-weight:700;line-height:1.1;letter-spacing:-5px;color:var(--accent);font-variant-numeric:tabular-nums}
+.metronome-tempo span{font-size:12px;letter-spacing:3px;font-weight:700;color:var(--muted)}
+.metronome-adjust{display:flex;gap:12px;align-items:center;margin:20px 0}
+.metronome-adjust button{width:48px;height:48px;flex-shrink:0;border-radius:13px;background:var(--soft);color:var(--accent);font-size:25px}
+.metronome-adjust input{width:100%;min-width:0;accent-color:var(--accent)}
+.metronome-beats{display:flex;justify-content:center;gap:13px;align-items:center;min-height:52px;margin:18px 0 23px}
+.metronome-beat{width:18px;height:18px;border-radius:50%;border:2px solid var(--accent);background:transparent;opacity:.45;transition:background .08s,transform .08s,opacity .08s}
+.metronome-beat.active{background:var(--accent);opacity:1;transform:scale(1.3)}
+.metronome-beat.first{border-width:3px}
+.metronome-field{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:58px;border-top:1px solid var(--line);font-size:14px;text-align:left}
+.metronome-field select{min-width:100px;min-height:44px;padding:8px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.metronome-field input{width:22px;height:22px;accent-color:var(--accent)}
+.metronome-panel .primary{margin-top:14px}
+.metronome-tap{margin-top:10px}
+#metronome-status{min-height:20px;margin:12px 0 0}
+
+/* Erik's Synth */
+.synth-tabs{display:flex;gap:6px;background:var(--soft);border-radius:15px;padding:5px;margin:22px 0 14px}
+.synth-tabs button{flex:1;padding:13px 10px;border-radius:11px;color:var(--muted);font-weight:700;background:transparent}
+.synth-tabs button[aria-selected=true]{background:var(--surface);color:var(--accent);box-shadow:0 2px 9px #0001}
+.synth-panel{padding:20px;border:1px solid var(--line);border-radius:22px;background:var(--surface);margin-bottom:25px}
+.synth-label{display:flex;flex-direction:column;gap:8px;font-size:13px;font-weight:650;color:var(--muted)}
+.synth-label select{min-height:44px;border:1px solid var(--line);border-radius:11px;background:var(--bg);color:var(--ink);padding:9px;font-size:15px}
+.synth-label input{width:100%;accent-color:var(--accent);min-height:26px}
+.synth-label output{color:var(--accent);font-weight:600}
+.synth-toolbar{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:17px 0}
+.synth-toolbar .secondary{width:auto;min-height:44px;padding:9px 13px;margin:0}
+.synth-keyboard-scroll{overflow-x:auto;overflow-y:hidden;touch-action:pan-x;margin:16px -10px 8px;padding:0 10px 9px}
+.synth-keyboard{position:relative;width:672px;height:208px;user-select:none;-webkit-user-select:none;touch-action:none}
+.synth-key{position:absolute;top:0;touch-action:none;border:1px solid #9ba9bd;border-radius:0 0 6px 6px;padding:0;display:flex;align-items:end;justify-content:center;font-size:10px;cursor:pointer}
+.synth-key.white{height:206px;width:48px;background:#fafcff;color:#475569;z-index:1;padding-bottom:10px}
+.synth-key.black{height:126px;width:29px;background:#1b2b44;border-color:#0d172a;z-index:2;color:white}
+.synth-key.pressed.white{background:#aac2ff}.synth-key.pressed.black{background:#2455d6}
+.synth-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 15px}
+@media(max-width:390px){.synth-controls{grid-template-columns:1fr}}
+
+/* Synth 2.0 */
+.synth-subtabs{display:flex;gap:6px;overflow-x:auto;padding:2px 0 13px;margin-bottom:14px;scrollbar-width:thin}
+.synth-subtab{flex-shrink:0;border-radius:10px;padding:10px 12px;background:var(--soft);color:var(--muted);font-size:12px;font-weight:700}
+.synth-subtab[aria-selected=true]{background:var(--accent);color:white}
+.synth-section[hidden]{display:none}
+.synth-switch{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--ink);font-weight:700;font-size:13px}
+.synth-switch input{width:22px;height:22px;accent-color:var(--accent)}
+#synth-adsr-graph{width:100%;max-width:600px;display:block;margin:15px auto 22px;touch-action:none;background:var(--soft);border-radius:15px}
+.synth-adsr-handle{fill:var(--accent);stroke:var(--surface);stroke-width:3;cursor:grab;touch-action:none}
+.synth-visual{position:relative;background:linear-gradient(145deg,#081326,#142d56);border:1px solid #29466f;border-radius:18px;overflow:hidden;margin:16px 0 10px}
+#synth-scope{width:100%;height:130px;display:block}
+.synth-visual-caption{display:flex;justify-content:space-between;padding:0 13px 11px;color:#88aaf1;font-size:10px;letter-spacing:1.5px;font-weight:700}
+
+/* Synth macros and Drum Machine */
+.synth-preset-actions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 18px}
+.synth-preset-actions .secondary,.synth-import{flex:1;min-width:80px;width:auto;margin:0;text-align:center;padding:11px;border-radius:10px;font-size:13px}
+.synth-import{background:var(--soft);color:var(--accent);cursor:pointer;font-weight:700}
+.synth-macros{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:10px 0}
+.synth-macros label{padding:13px;background:var(--soft);border-radius:13px;font-size:12px;font-weight:700;color:var(--ink)}
+.synth-macros input{display:block;width:100%;margin-top:10px;accent-color:var(--accent)}
+.synth-glide-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center;margin:12px 0}
+.drums-transport{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:end;margin:15px 0}
+.drums-transport input[type=number]{width:100%;min-height:43px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);padding:8px;font-size:18px}
+.drums-transport input[type=range]{width:100%;accent-color:var(--accent)}
+.drums-transport button{margin:0;min-height:44px}
+.drums-light-stage{height:142px;background:radial-gradient(ellipse at center,#1d3167,#071124 75%);border:1px solid #244578;border-radius:18px;position:relative;overflow:hidden;margin:16px 0}
+.drums-neon-grid{position:absolute;inset:0;background-image:linear-gradient(#3a74cc22 1px,transparent 1px),linear-gradient(90deg,#3a74cc22 1px,transparent 1px);background-size:30px 30px;transform:perspective(180px) rotateX(18deg) scale(1.1)}
+.drums-light-title{position:absolute;inset:0;display:grid;place-items:center;font-weight:800;letter-spacing:4px;color:#a4caff;text-shadow:0 0 20px #2b7bff;font-size:14px}
+.drums-ripples{position:absolute;inset:0;pointer-events:none}
+.drums-ripple{position:absolute;left:50%;top:50%;width:22px;height:22px;border:2px solid #60e7ff;border-radius:18%;box-shadow:0 0 16px #00d9ff,0 0 32px #4466ff,inset 0 0 14px #24d7ff;transform:translate(-50%,-50%) scale(.1);animation:drum-wave .85s ease-out forwards}
+.drums-ripple:nth-child(even){border-color:#bc82ff;box-shadow:0 0 16px #a348ff,0 0 35px #4c80ff}
+@keyframes drum-wave{0%{opacity:1;transform:translate(-50%,-50%) scale(.1)}75%{opacity:.7}100%{opacity:0;transform:translate(-50%,-50%) scale(19)}}
+.drums-pad-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.drums-pad{position:relative;aspect-ratio:1;border-radius:13px;border:1px solid #5878bb;background:linear-gradient(140deg,#253e78,#142548);color:#c7dfff;box-shadow:inset 0 1px 2px #8fb5ff55,0 4px 12px #0002;display:flex;align-items:end;justify-content:start;padding:9px;font-size:clamp(9px,2.3vw,12px);font-weight:800;overflow:hidden;touch-action:manipulation}
+.drums-pad:active,.drums-pad.hit{background:linear-gradient(140deg,#467fff,#234dc5);box-shadow:0 0 22px #348affaa,inset 0 0 18px #7bcfff}
+.drums-pad::before{content:'';position:absolute;inset:12%;border:1px solid #83b7ff35;border-radius:9px}
+.drums-pattern-row{display:flex;justify-content:space-between;align-items:end;gap:10px;margin-bottom:16px}
+.drums-pattern-row .secondary{width:auto;margin:0}
+.drums-seq-scroll{overflow-x:auto;padding-bottom:12px}
+.drums-seq-row{display:grid;grid-template-columns:65px repeat(16,25px);gap:4px;align-items:center;margin-bottom:6px;min-width:max-content}
+.drums-seq-name{font-size:10px;color:var(--muted);font-weight:700}
+.drums-step{height:30px;border:1px solid var(--line);border-radius:5px;background:var(--soft);padding:0}
+.drums-step:nth-child(4n + 2){border-left:2px solid var(--accent)}
+.drums-step.active{background:var(--accent);border-color:var(--accent)}
+.drums-step.playhead{box-shadow:0 0 0 2px #65dfff,0 0 12px #28dfff}
+@media(max-width:380px){.drums-pad{padding:5px}.synth-glide-row{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.drums-ripple{animation-duration:.01ms}}
+
+/* Touch XY performance controller */
+.synth-xy-wrap{margin:18px 0;padding:14px;border:1px solid var(--line);border-radius:17px}
+.synth-xy-heading{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.synth-xy-heading .secondary{width:auto;margin:0;padding:8px 12px}
+.synth-xy-pad{position:relative;height:210px;margin-top:12px;border-radius:16px;overflow:hidden;touch-action:none;user-select:none;background:radial-gradient(ellipse at center,#244b83,#0a1730 80%);border:1px solid #406ca6;box-shadow:inset 0 0 35px #060e22}
+.synth-xy-pad::before{content:"";position:absolute;inset:0;background-image:linear-gradient(#7bb8ff23 1px,transparent 1px),linear-gradient(90deg,#7bb8ff23 1px,transparent 1px);background-size:25% 25%}
+.synth-xy-pad::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 49.85%,#87cbff40 50%,transparent 50.15%),linear-gradient(transparent 49.85%,#87cbff40 50%,transparent 50.15%);pointer-events:none}
+.synth-xy-dot{position:absolute;z-index:2;left:50%;top:100%;width:29px;height:29px;border:2px solid #d2faff;border-radius:50%;background:#55b9ff;box-shadow:0 0 15px #50b9ff,0 0 35px #418aff;transform:translate(-50%,-50%);pointer-events:none}
+.synth-xy-axis-top,.synth-xy-axis-bottom{position:absolute;z-index:1;left:0;right:0;text-align:center;color:#a7c6ef;font-size:10px;font-weight:700;letter-spacing:1px;pointer-events:none}
+.synth-xy-axis-top{top:10px}.synth-xy-axis-bottom{bottom:10px}
+.synth-xy-values{display:flex;justify-content:space-between;margin-top:10px;color:var(--muted);font-size:12px;font-weight:700}
+
+.drums-kit-bar{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:10px;margin:14px 0 6px}.drums-kit-bar button{width:auto;margin:0;padding:11px 12px}.drums-kit-bar select{max-width:100%}
+
+.synth-display-switches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.synth-display-switches .synth-switch{min-width:0;font-size:12px;gap:6px;padding:10px}.synth-display-switches input{flex-shrink:0}#synth-waveform-wrap[hidden],#synth-xy-wrap[hidden]{display:none!important}
