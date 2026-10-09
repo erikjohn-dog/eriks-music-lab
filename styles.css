@@ -20,3 +20,69 @@
 .training-navigation{margin:-17px 0 19px}
 .back-home{background:transparent;color:var(--accent);font-weight:650;font-size:13px;min-height:44px;padding:7px 0}
 @media(max-width:350px){.module-card{padding:15px 12px;min-height:216px}.module-title{font-size:15px}.module-description{font-size:11px}}
+
+/* Piano preview: landscape-only instrument */
+.piano-portrait{text-align:center;padding:36px 12px;color:var(--muted)}
+.piano-landscape{display:none}
+@media(orientation:landscape){
+  body:has(#piano-stage:not([hidden])){overflow:hidden}
+  body:has(#piano-stage:not([hidden])) .app-shell{max-width:none;padding:8px 12px;min-height:100dvh}
+  body:has(#piano-stage:not([hidden])) .app-header,body:has(#piano-stage:not([hidden])) footer{display:none}
+  .piano-portrait{display:none}.piano-landscape{display:block}
+  .piano-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;height:38px}
+  .piano-toolbar button{background:var(--soft);color:var(--accent);border-radius:9px;padding:5px 12px;min-height:32px}
+  .piano-octaves{display:flex;gap:8px;align-items:center;font-size:12px}
+  #piano-status{font-size:11px;text-align:center;margin:4px}
+  #piano-start{position:absolute;z-index:4;left:50%;top:45%;transform:translate(-50%,-50%);width:190px}
+  .piano-keyboard{display:flex;position:relative;width:100%;height:calc(100dvh - 108px);min-height:110px;touch-action:none;user-select:none;-webkit-user-select:none}
+  .piano-key{position:relative;touch-action:none;padding:0;border-radius:0}
+  .piano-key.white{flex:1;background:#fff;border:1px solid #a6adbb;border-radius:0 0 5px 5px}
+  .piano-key.black{position:absolute;z-index:2;top:0;height:60%;width:4%;background:#182236;border-radius:0 0 4px 4px}
+  .piano-key.black:nth-child(2){left:4.25%}.piano-key.black:nth-child(4){left:10.5%}
+  .piano-key.black:nth-child(7){left:23%}.piano-key.black:nth-child(9){left:29.25%}.piano-key.black:nth-child(11){left:35.5%}
+  .piano-key.black:nth-child(14){left:41.75%}.piano-key.black:nth-child(16){left:48%}
+  .piano-key.black:nth-child(19){left:60.5%}.piano-key.black:nth-child(21){left:66.75%}.piano-key.black:nth-child(23){left:73%}
+  .piano-key.pressed.white{background:#c7d9ff}.piano-key.pressed.black{background:#3458a9}
+  .piano-credit{text-align:center;font-size:9px;color:var(--muted);margin:2px}
+}
+
+/* Persistent, reachable return controls in both piano orientations. */
+.piano-portrait .piano-return{display:block;background:var(--soft);color:var(--accent);padding:10px 14px;border-radius:12px;min-height:44px;margin-bottom:26px;font-weight:650}
+@media(orientation:landscape){
+  .piano-toolbar{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+  .piano-toolbar .piano-return{position:relative;z-index:5;flex-shrink:0;min-height:40px;padding:7px 12px;font-weight:700;background:var(--accent);color:var(--accent-ink)}
+  .piano-keyboard{height:calc(100dvh - 116px - env(safe-area-inset-bottom));}
+}
+
+/* Portrait navigation must remain visible independently of piano controls. */
+@media(orientation:portrait){
+  #piano-stage:not([hidden]) .piano-portrait{display:flex;flex-direction:column;align-items:stretch;text-align:center;padding:0 12px 36px}
+  #piano-stage:not([hidden]) .piano-portrait-nav{display:flex;justify-content:flex-start;margin:0 0 52px}
+  #piano-stage:not([hidden]) .piano-portrait-nav .piano-return{display:inline-flex!important;align-items:center;justify-content:center;visibility:visible;opacity:1;min-height:44px;margin:0;background:var(--soft);color:var(--accent);border:1px solid var(--line);border-radius:12px;padding:10px 16px;font-size:14px;font-weight:700}
+}
+
+/* Scrollable 5-octave keyboard and pitch labels */
+@media(orientation:landscape){
+  .piano-viewport{width:100%;height:calc(100dvh - 116px - env(safe-area-inset-bottom));min-height:110px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;touch-action:pan-x}
+  .piano-viewport .piano-keyboard{position:relative;display:block;height:100%;min-height:110px;touch-action:pan-x}
+  .piano-viewport .piano-key{position:absolute;top:0;display:block;touch-action:pan-x;user-select:none;-webkit-user-select:none}
+  .piano-viewport .piano-key.white{height:100%;background:#fff;border:1px solid #a6adbb;border-radius:0 0 5px 5px}
+  .piano-viewport .piano-key.black{height:60%;background:#182236;border-radius:0 0 4px 4px;z-index:2}
+  .piano-viewport .piano-key.pressed.white{background:#c7d9ff}
+  .piano-viewport .piano-key.pressed.black{background:#3458a9}
+  .piano-note-label{position:absolute;bottom:9px;left:0;right:0;text-align:center;font-size:10px;font-weight:600;pointer-events:none;color:#667085;white-space:nowrap}
+  .piano-key.black .piano-note-label{bottom:7px;color:#e5eaf5;font-size:9px}
+}
+
+
+/* Piano-specific settings: compact landscape toolbar action. */
+.piano-settings-button{min-height:36px;padding:7px 12px;border-radius:10px;background:var(--soft);color:var(--accent);border:1px solid var(--line);font-size:12px;font-weight:700;white-space:nowrap}
+.piano-settings-dialog{max-width:min(420px,calc(100vw - 32px));width:100%;border:1px solid var(--line);border-radius:20px;background:var(--surface);color:var(--ink);padding:24px;box-shadow:var(--shadow)}
+.piano-settings-dialog::backdrop{background:#0008}
+.piano-settings-dialog form{display:grid;gap:20px}
+.piano-settings-dialog h2{margin:0;font-size:23px}
+.piano-settings-dialog .field{margin:0}
+
+/* Matching gear buttons in landscape and portrait piano headers. */
+.piano-toolbar .piano-settings-button,.piano-portrait-nav .piano-settings-button{width:44px;height:44px;min-width:44px;min-height:44px;padding:0;display:grid;place-items:center;border-radius:50%;background:var(--soft);color:var(--ink);border:0;flex-shrink:0}
+.piano-portrait-nav{align-items:center;justify-content:space-between!important;gap:12px}
