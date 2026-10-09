@@ -14,6 +14,7 @@
   <link rel="icon" type="image/png" href="./icons/icon-192.png">
   <link rel="stylesheet" href="./styles.css">
   <script type="module" src="./app.js"></script>
+  <script type="module" src="./navigation.js"></script>
 </head>
 <body>
 <div class="app-shell">
@@ -21,7 +22,29 @@
     <a class="brand" href="./" aria-label="Erik’s Music Lab home"><span class="brand-symbol" aria-hidden="true"><img src="./icons/icon.svg" alt="" width="39" height="39" style="display:block;width:39px;height:39px;border-radius:13px"></span><span>Erik’s Music Lab<span class="brand-sub">MUSIC TOOLKIT</span></span></a>
     <button id="settings-open" class="icon-button" aria-label="Open settings"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m9 3-.7 2.2-2 .9-2.1-.5-2 3.4 1.5 1.7v2.6L2.2 15l2 3.4 2.1-.5 2 .9L9 21h4l.7-2.2 2-.9 2.1.5 2-3.4-1.5-1.7v-2.6l1.5-1.7-2-3.4-2.1.5-2-.9L13 3Z"/><circle cx="11" cy="12" r="3"/></svg></button>
   </header>
-  <main id="training">
+  <main id="home" class="home-view">
+    <div class="eyebrow">WELCOME TO ERIK’S MUSIC LAB</div>
+    <h1>Your Musical Companion.</h1>
+    <p class="subtitle">Explore, practice, and create — all in one place.</p>
+    <div class="home-section-label">YOUR TOOLS <span>02 MODULES</span></div>
+    <div class="module-grid">
+      <button type="button" class="module-card" id="open-perfect-pitch">
+        <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17C12 8 19 4 27 5c9 1 14 8 13 17-.5 7-5 10-9 14-3 3-4 8-11 8-6 0-10-4-10-10"/><path d="M19 28c-2-3-3-7-2-11 1-5 5-8 10-8 6 0 10 5 10 11 0 5-3 7-7 10-2 2-3 5-5 7"/><path d="M21 23c-1-4 1-8 5-8 4 0 6 3 6 6"/></svg></span>
+        <span class="module-title">Perfect Pitch</span>
+        <span class="module-description">Train your ear. Find the note.</span>
+        <span class="module-action">Start training <span aria-hidden="true">↗</span></span>
+      </button>
+      <button type="button" class="module-card" id="open-piano">
+        <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"><rect x="5" y="7" width="38" height="34" rx="5"/><path d="M13 8v32M21 8v32M29 8v32M37 8v32" stroke-width="1.8"/><path d="M10 8v18h6V8M18 8v18h6V8M26 8v18h6V8" fill="currentColor" stroke="none"/></svg></span>
+        <span class="module-title">Piano</span>
+        <span class="module-description">Your digital instrument.</span>
+        <span class="module-action">Coming next <span aria-hidden="true">↗</span></span>
+      </button>
+    </div>
+    <p class="home-footnote">A little space for big musical ideas.</p>
+  </main>
+  <div id="training-navigation" class="training-navigation" hidden><button id="back-home" type="button" class="back-home">← All tools</button></div>
+  <main id="training" hidden>
     <div class="eyebrow" id="mode-label">LISTEN · RECOGNIZE · REPEAT</div>
     <h1 id="question-title">Find the note.</h1>
     <p class="subtitle" id="question-subtitle">One pure tone. Twelve possibilities.</p>
@@ -42,6 +65,14 @@
   <footer><span class="status-dot" id="offline-dot"></span><span id="offline-status">Preparing offline access…</span><button id="update" class="text-button" hidden>Update available</button></footer>
   <p id="warning" class="notice" role="status" hidden></p>
 </div>
+<dialog id="general-settings-dialog" class="sheet" aria-labelledby="general-settings-title">
+  <form id="general-settings-form">
+    <div class="sheet-header"><div><div class="eyebrow">ERIK’S MUSIC LAB</div><h2 id="general-settings-title">General Settings</h2></div><button type="button" class="icon-button" id="general-settings-close" aria-label="Close general settings">✕</button></div>
+    <section class="settings-section"><h3>Appearance</h3><label class="field"><span>App theme</span><select name="theme"><option value="system">Follow system</option><option value="light">Light</option><option value="dark">Dark</option></select></label><label class="field"><span>Subtle animations</span><input name="animations" type="checkbox"></label></section>
+    <section class="settings-section about"><h3>About</h3><p><strong>Erik’s Music Lab · Preview</strong></p><p>Your settings and Perfect Pitch statistics are stored locally on this device. Clearing website data may erase them.</p><p>Offline status is shown at the bottom of the app.</p></section>
+    <div class="sheet-actions"><button class="primary" type="submit">Save settings</button></div>
+  </form>
+</dialog>
 <dialog id="settings-dialog" class="sheet" aria-labelledby="settings-title">
   <form id="settings-form">
     <div class="sheet-header"><div><div class="eyebrow">MAKE IT YOURS</div><h2 id="settings-title">Settings</h2></div><button class="icon-button" type="button" id="settings-close" aria-label="Close settings">✕</button></div>
