@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="./styles.css">
   <script type="module" src="./app.js"></script>
   <script type="module" src="./navigation.js"></script>
+  <script type="module" src="./piano.js"></script>
 </head>
 <body>
 <div class="app-shell">
@@ -38,12 +39,22 @@
         <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"><rect x="5" y="7" width="38" height="34" rx="5"/><path d="M13 8v32M21 8v32M29 8v32M37 8v32" stroke-width="1.8"/><path d="M10 8v18h6V8M18 8v18h6V8M26 8v18h6V8" fill="currentColor" stroke="none"/></svg></span>
         <span class="module-title">Piano</span>
         <span class="module-description">Your digital instrument.</span>
-        <span class="module-action">Coming next <span aria-hidden="true">↗</span></span>
+        <span class="module-action">Play piano <span aria-hidden="true">↗</span></span>
       </button>
     </div>
     <p class="home-footnote">A little space for big musical ideas.</p>
   </main>
   <div id="training-navigation" class="training-navigation" hidden><button id="back-home" type="button" class="back-home">← All tools</button></div>
+  <main id="piano-stage" hidden>
+    <div class="piano-portrait"><nav class="piano-portrait-nav" aria-label="Piano navigation"><button type="button" class="piano-return" aria-label="Return to all tools">← All tools</button></nav><h2>Turn your iPhone sideways.</h2><p>The piano is designed for landscape mode.</p></div>
+    <div class="piano-landscape">
+      <div class="piano-toolbar"><button type="button" id="piano-back" class="piano-return">← All tools</button><strong>Grand Piano</strong><span class="piano-toolbar-spacer" aria-hidden="true"></span></div>
+      <p id="piano-status" role="status">Tap Load Piano to prepare the instrument.</p>
+      <button type="button" id="piano-start" class="primary">Load Piano</button>
+      <div id="piano-viewport" class="piano-viewport" aria-label="Swipe horizontally to explore piano keys"><div id="piano-keyboard" class="piano-keyboard" aria-label="Playable piano keyboard"></div></div>
+      <p class="piano-credit">Salamander Grand Piano V3 · Alexander Holm · CC BY 3.0</p>
+    </div>
+  </main>
   <main id="training" hidden>
     <div class="eyebrow" id="mode-label">LISTEN · RECOGNIZE · REPEAT</div>
     <h1 id="question-title">Find the note.</h1>
@@ -69,7 +80,7 @@
   <form id="general-settings-form">
     <div class="sheet-header"><div><div class="eyebrow">ERIK’S MUSIC LAB</div><h2 id="general-settings-title">General Settings</h2></div><button type="button" class="icon-button" id="general-settings-close" aria-label="Close general settings">✕</button></div>
     <section class="settings-section"><h3>Appearance</h3><label class="field"><span>App theme</span><select name="theme"><option value="system">Follow system</option><option value="light">Light</option><option value="dark">Dark</option></select></label><label class="field"><span>Subtle animations</span><input name="animations" type="checkbox"></label></section>
-    <section class="settings-section about"><h3>About</h3><p><strong>Erik’s Music Lab · Preview</strong></p><p>Your settings and Perfect Pitch statistics are stored locally on this device. Clearing website data may erase them.</p><p>Offline status is shown at the bottom of the app.</p></section>
+    <section class="settings-section about"><h3>About</h3><p><strong>Erik’s Music Lab</strong></p><p>Your settings and Perfect Pitch statistics are stored locally on this device. Clearing website data may erase them.</p><p>Offline status is shown at the bottom of the app.</p></section>
     <div class="sheet-actions"><button class="primary" type="submit">Save settings</button></div>
   </form>
 </dialog>
