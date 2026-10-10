@@ -88,8 +88,62 @@ const LAST = 95; // B7
 const WHITE_WIDTH = 46;
 const BLACK_WIDTH = 29;
 const pointers = new Map();
+let harmonyModule=null;
+import('./piano-harmony.js').then(m=>{harmonyModule=m;drawNotation();});
+// Polyphonic notation displays every held MIDI note.
+
+const notationPanel=document.createElement('section');
+notationPanel.className='piano-notation';
+notationPanel.setAttribute('aria-label','Live piano sheet music');
+notationPanel.innerHTML='<div class="piano-notation-heading"><strong>LIVE NOTATION</strong><span id="piano-current-note" aria-live="off">Play a key</span></div><svg id="piano-staff" viewBox="0 0 280 188" role="img" aria-label="Treble and bass staves"><g id="piano-staff-lines"></g><g id="piano-staff-notes"></g></svg>';
+document.querySelector('.piano-landscape .piano-toolbar')?.after(notationPanel);
+const staffLines=notationPanel.querySelector('#piano-staff-lines');
+const staffNotes=notationPanel.querySelector('#piano-staff-notes');
+const NS='http://www.w3.org/2000/svg';
+function svgEl(tag,attrs,parent){const el=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,String(v));parent.append(el);return el;}
+for(const [label,top,glyph] of [['TREBLE',24,'𝄞'],['BASS',110,'𝄢']]){
+  for(let i=0;i<5;i++)svgEl('line',{x1:46,x2:263,y1:top+i*11,y2:top+i*11,stroke:'#52657d','stroke-width':1.3},staffLines);
+  svgEl('text',{x:0,y:top+33,fill:'#a4b5d0','font-size':label==='TREBLE'?49:37,'font-family':'serif'},staffLines).textContent=glyph;
+}
+const diatonic=['C','D','E','F','G','A','B'];
+function staffPosition(midi){
+  const letter=notes[midi%12][0],octave=Math.floor(midi/12)-1;
+  const index=octave*7+diatonic.indexOf(letter);
+  // Treble E4 bottom line, bass G2 bottom line.
+  const treble=midi>=60,base=treble?4*7+2:2*7+4;
+  return {y:(treble?68:154)-(index-base)*5.5,top:treble?24:110,sharp:notes[midi%12].includes('#')};
+}
+function drawNotation(){
+  staffNotes.replaceChildren();
+  const active=[...new Set([...pointers.values()].filter(p=>p.playing).map(p=>p.midi))].sort((a,b)=>a-b);
+  const midi=active.at(-1);
+  const summary=notationPanel.querySelector('#piano-current-note');
+  summary.textContent=midi===undefined?'Play a key':label(midi)+' · '+germanLabel(midi);
+  if(active.length===2){summary.replaceChildren(...[label(active[0])+' · '+germanLabel(active[0]),label(active[1])+' · '+germanLabel(active[1]),harmonyModule?.intervalName(active[0],active[1])||''].map(value=>{const line=document.createElement('span');line.textContent=value;return line;}));}
+  if(active.length>=3)summary.textContent=harmonyModule?.recognizeChord(active)||'Unidentified chord';
+  if(midi===undefined)return;
+  for(const [i,note] of active.entries()){
+  const {y,top,sharp}=staffPosition(note);
+  const nearby=active.slice(0,i).filter(previous=>Math.abs(staffPosition(previous).y-y)<9&&staffPosition(previous).top===top).length;
+  const x=166+nearby*19;
+  for(let line=top-11;line>=y-2;line-=11)svgEl('line',{x1:x-18,x2:x+18,y1:line,y2:line,stroke:'#a3b7d0','stroke-width':1.5},staffNotes);
+  for(let line=top+55;line<=y+2;line+=11)svgEl('line',{x1:x-18,x2:x+18,y1:line,y2:line,stroke:'#a3b7d0','stroke-width':1.5},staffNotes);
+  if(sharp)svgEl('text',{x:x-29,y:y+7,fill:'#8faaff','font-size':25,'font-family':'serif'},staffNotes).textContent='♯';
+  svgEl('ellipse',{cx:x,cy:y,rx:9,ry:6,fill:'#8faaff',transform:`rotate(-19 ${x} ${y})`},staffNotes);
+  if(active.length===1)svgEl('line',{x1:x+8,x2:x+8,y1:y,y2:y-34,stroke:'#8faaff','stroke-width':2},staffNotes);
+  }
+}
+
 let initializedPosition = false;
 function label(midi) { return notes[midi%12]+(Math.floor(midi/12)-1); }
+function germanLabel(midi){
+ const german=['c','cis','d','dis','e','f','fis','g','gis','a','ais','h'];
+ const octave=Math.floor(midi/12)-1;
+ const name=german[midi%12];
+ if(octave>=4)return name+"'".repeat(octave-3);
+ if(octave===3)return name;
+ return name.toUpperCase()+','.repeat(Math.max(0,2-octave));
+}
 function buildKeyboard() {
   keyboard.replaceChildren();
   let whiteIndex = 0;
@@ -115,38 +169,71 @@ function buildKeyboard() {
     keyboard.append(key);
   }
   keyboard.style.width=(whiteIndex*WHITE_WIDTH)+'px';
+ requestAnimationFrame(syncPianoStrip);
 }
 function centerOn(midi) {
   const key=keyboard.querySelector('[data-midi="'+midi+'"]');
   if (!key) return;
   viewport.scrollLeft=Math.max(0,key.offsetLeft+key.offsetWidth/2-viewport.clientWidth/2);
+ syncPianoStrip();
 }
 function stopPointer(pointerId) {
   const state=pointers.get(pointerId);
   if(!state)return;
   pointers.delete(pointerId);
   if(state.playing) {
-    if(pianoSound==='sine')sineOff(state.midi);
-    else engine.noteOff(state.midi);
-    state.key.classList.remove('pressed');
+    if(![...pointers.values()].some(p=>p.midi===state.midi)){
+      if(pianoSound==='sine')sineOff(state.midi);else engine.noteOff(state.midi);
+      state.key.classList.remove('pressed');
+    }
+    drawNotation();
   }
 }
+function keyAtPoint(x,y){
+ const rect=keyboard.getBoundingClientRect();
+ if(x<rect.left||x>rect.right||y<rect.top||y>rect.bottom)return null;
+ // Hit-test black keys first; they visually overlap the white keys.
+ const black=[...keyboard.querySelectorAll('.piano-key.black')];
+ for(const key of black){
+  const box=key.getBoundingClientRect();
+  if(x>=box.left&&x<=box.right&&y>=box.top&&y<=box.bottom)return key;
+ }
+ for(const key of keyboard.querySelectorAll('.piano-key.white')){
+  const box=key.getBoundingClientRect();
+  if(x>=box.left&&x<=box.right&&y>=box.top&&y<=box.bottom)return key;
+ }
+ return null;
+}
+function movePianoPointer(id,key){
+ const state=pointers.get(id);
+ if(!state||!key||state.key===key)return;
+ const midi=Number(key.dataset.midi);
+ const old=state.midi;
+ state.key=key;state.midi=midi;
+ if(![...pointers.values()].some(p=>p.midi===old)){
+  keyboard.querySelector('[data-midi="'+old+'"]').classList.remove('pressed');
+  if(pianoSound==='sine')sineOff(old);else engine.noteOff(old);
+ }
+ const already=[...pointers.entries()].some(([otherId,p])=>otherId!==id&&p.midi===midi);
+ key.classList.add('pressed');
+ if(!already){if(pianoSound==='sine')sineOn(midi);else engine.noteOn(midi);}
+ drawNotation();
+}
 viewport.addEventListener('pointerdown',event=>{
-  if(event.pointerType==='mouse'&&event.button!==0)return;
-  const key=event.target.closest('.piano-key');
-  if(!key||(pianoSound==='piano'&&!engine.buffers.size))return;
-  const midi=Number(key.dataset.midi);
-  pointers.set(event.pointerId,{midi,key,x:event.clientX,y:event.clientY,playing:true});
-  key.classList.add('pressed');
-  if(pianoSound==='sine')sineOn(midi);
-  else engine.noteOn(midi);
+ if(event.pointerType==='mouse'&&event.button!==0)return;
+ const key=event.target.closest('.piano-key');
+ if(!key||(pianoSound==='piano'&&!engine.buffers.size))return;
+ if(event.pointerType!=='mouse')event.preventDefault();
+ const midi=Number(key.dataset.midi);
+ pointers.set(event.pointerId,{midi,key,playing:true});
+ try{viewport.setPointerCapture(event.pointerId)}catch{}
+ key.classList.add('pressed');drawNotation();
+ if(pianoSound==='sine')sineOn(midi);else engine.noteOn(midi);
 });
 viewport.addEventListener('pointermove',event=>{
-  const state=pointers.get(event.pointerId);
-  if(!state)return;
-  // Native horizontal touch scrolling remains enabled. Release any note
-  // when the finger turns into a swipe; pointercancel also handles scrolling.
-  if(Math.abs(event.clientX-state.x)>12||Math.abs(event.clientY-state.y)>18)stopPointer(event.pointerId);
+ if(!pointers.has(event.pointerId))return;
+ if(event.pointerType!=='mouse')event.preventDefault();
+ movePianoPointer(event.pointerId,keyAtPoint(event.clientX,event.clientY));
 });
 for(const type of ['pointerup','pointercancel','lostpointercapture'])
   viewport.addEventListener(type,event=>stopPointer(event.pointerId));
@@ -155,6 +242,65 @@ window.addEventListener('pointercancel',event=>stopPointer(event.pointerId));
 viewport.addEventListener('scroll',()=>{
   for(const id of [...pointers.keys()])stopPointer(id);
 },{passive:true});
+// A dedicated navigation strip keeps playing gestures separate from scrolling.
+const scrollStrip=document.getElementById('piano-scroll-strip');
+const scrollThumb=document.getElementById('piano-scroll-thumb');
+const scrollHome=scrollStrip.parentElement;
+function positionPianoStrip(){
+ const landscape=window.matchMedia('(orientation:landscape)').matches;
+ const target=landscape?toolbar:scrollHome;
+ if(scrollStrip.parentElement!==target){
+  if(landscape)toolbar.insertBefore(scrollStrip,pianoSettingsButton);
+  else scrollHome.insertBefore(scrollStrip,scrollHome.querySelector('.piano-credit'));
+ }
+ requestAnimationFrame(syncPianoStrip);
+}
+
+let stripPointer=null;
+function syncPianoStrip(){
+ if(!scrollStrip||!scrollThumb)return;
+ const maximum=Math.max(0,viewport.scrollWidth-viewport.clientWidth);
+ const track=scrollStrip.clientWidth;
+ const thumbWidth=Math.max(32,Math.min(track,track*viewport.clientWidth/Math.max(viewport.scrollWidth,1)));
+ scrollThumb.style.width=thumbWidth+'px';
+ scrollThumb.style.transform='translateX('+(maximum?viewport.scrollLeft/maximum*(track-thumbWidth):0)+'px)';
+ scrollStrip.setAttribute('aria-valuenow',String(Math.round(maximum?100*viewport.scrollLeft/maximum:0)));
+}
+function scrollFromStrip(clientX,offset=0){
+ const rect=scrollStrip.getBoundingClientRect();
+ const thumbWidth=scrollThumb.getBoundingClientRect().width;
+ const travel=Math.max(1,rect.width-thumbWidth);
+ const position=Math.max(0,Math.min(travel,clientX-rect.left-offset));
+ viewport.scrollLeft=position/travel*Math.max(0,viewport.scrollWidth-viewport.clientWidth);
+ syncPianoStrip();
+}
+scrollStrip.addEventListener('pointerdown',event=>{
+ if(event.pointerType==='mouse'&&event.button!==0)return;
+ event.preventDefault();
+ const box=scrollThumb.getBoundingClientRect();
+ const onThumb=event.clientX>=box.left&&event.clientX<=box.right;
+ stripPointer={id:event.pointerId,offset:onThumb?event.clientX-box.left:box.width/2};
+ try{scrollStrip.setPointerCapture(event.pointerId)}catch{}
+ scrollFromStrip(event.clientX,stripPointer.offset);
+});
+scrollStrip.addEventListener('pointermove',event=>{
+ if(!stripPointer||event.pointerId!==stripPointer.id)return;
+ event.preventDefault();
+ scrollFromStrip(event.clientX,stripPointer.offset);
+});
+for(const type of ['pointerup','pointercancel','lostpointercapture'])
+ scrollStrip.addEventListener(type,event=>{if(stripPointer?.id===event.pointerId)stripPointer=null;});
+scrollStrip.addEventListener('keydown',event=>{
+ const step=WHITE_WIDTH*3;
+ if(event.key==='ArrowLeft'||event.key==='ArrowRight'){
+  event.preventDefault();
+  viewport.scrollLeft+=event.key==='ArrowLeft'?-step:step;
+  syncPianoStrip();
+ }
+});
+viewport.addEventListener('scroll',syncPianoStrip,{passive:true});
+window.addEventListener('resize',positionPianoStrip);
+positionPianoStrip();
 start.addEventListener('click',async()=>{
   start.disabled=true;
   status.textContent='Loading piano samples…';
@@ -174,6 +320,7 @@ document.addEventListener('musiclab:piano-hidden',()=>{
   for(const midi of [...sineVoices.keys()])sineOff(midi);
   if(pianoSettingsDialog.open)pianoSettingsDialog.close();
   keyboard.querySelectorAll('.pressed').forEach(key=>key.classList.remove('pressed'));
+  drawNotation();
 });
 buildKeyboard();
 function setInitialPosition(){
