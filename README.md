@@ -1,42 +1,135 @@
 # Erik’s Music Lab
 
-A free, installable music practice web app with **Grand Piano**, **Chromatic Tuner**, **Metronome**, **Synth**, **Drum Machine**, **Practice Studio**, and a guided **Ear Trainer** for pitch, intervals, chords and scales. Explore music, train your ear and build musical confidence at your own pace. Settings and training progress are saved locally; offline use is supported after the app and required audio assets have been cached.
+A free, installable music practice web app with **Grand Piano**, **Chromatic Tuner**, **Metronome**, **Synth**, **Drum Machine**, **Practice Room**, **Neon Sampler** (single-track audio recorder and vocal pitch analysis), and a guided **Ear Trainer** for pitch, intervals, chords and scales. Explore music, train your ear and build musical confidence at your own pace. Settings and training progress are saved locally; offline use is supported after the app and required audio assets have been cached.
 
-**Preview app:** https://erikjohn-dog.github.io/eriks-music-lab/
+**Official app:** https://erikjohn-dog.github.io/eriks-music-lab/
 
 ## Add to your iPhone Home Screen
 
-1. Open the Preview link above in **Safari** on your iPhone.
+1. Open the official app link above in **Safari** on your iPhone.
 2. Tap **Share** (or the Safari menu containing Share).
 3. Choose **Add to Home Screen**.
 4. Keep **Open as Web App** enabled if offered, then tap **Add**.
 5. Launch **Erik’s Music Lab** from your Home Screen while online so offline files can finish caching.
 
+## Current release capabilities
+
+Neon Sampler supports one audio track at a time: microphone recording (with permission), audio import, local IndexedDB library, rename/delete, original export, waveform scrubbing, zoom, IN/OUT loop selection and trimmed WAV export. Vocal Pitch Analysis estimates monophonic notes, frequency, cents and likely major/minor keys; it is not a calibrated tuner and may miss or misidentify notes. Live reverb, echo, delay, playback speed and optional manual SoundTouch transposition are non-destructive and are **not rendered into exports**. Automatic pitch correction has been removed. Audio-only multitrack recording is a future idea, **not implemented**. Export important takes before clearing browser data or uninstalling the PWA.
+
+Offline use requires an initial online load and cached assets. Updates are offered in the app and may require confirmation and reopening. Before promoting preview to LIVE, test recording, playback, editing, exports, local persistence, offline behavior, audio effects and iPhone gestures on a real device. The release version is 1.6.0. The preview app is maintained separately for future testing.
+
 ## Changelog
 
-- 1.5.0 · Published Practice Studio with timer, templates, goals, calendar and insights; Sing the Note with pitch tracking and Ear Trainer visual refinements; unified audio sample status and navigation improvements from Preview.
+- 1.6.0 · LIVE release of Neon Sampler and the tested preview improvements: single-track recording, waveform controls, vocal pitch analysis, manual SoundTouch transpose, iPhone touch knobs and navigation, plus updated app descriptions and offline cache.
+
+
+- 1.1.19 · Publication-readiness copy audit: updated Neon Sampler descriptions, single-track status, manual transpose and effects/export limitations, local recording backup warning, metadata and release checklist. Historical changelog remains unchanged.
+
+
+- 1.1.18 · Fixed stray literal 'undefined' in arrangement markup and moved recording transport directly beneath waveform timeline. Pitch analysis now follows transport and is shown only for selected recordings; transport remains available before first recording.
+
+
+- 1.1.17 · Collapsible Vocal Pitch Analysis and FX Rack; four accessible neon rotary effect knobs controlled by vertical touch drag or keyboard, backed by existing sliders; recording transport moved into arrangement beneath the editor and above the empty state. Single track and manual SoundTouch transpose unchanged.
+
+
+- 1.1.16 · Neon Sampler preview naming; corrected home-card pink hover and Start recording accent; pointer-drag waveform scrubbing; compact 2-column iPhone FX cards with manual transpose in an optional section; edge-swipe navigation back while avoiding interactive controls. Single-track only; audio recordings preserved.
+
+
+- 1.1.15 · Removed experimental automatic note-by-note pitch correction controls and playback scheduling. Retained manual SoundTouch transposition, vocal pitch analysis, scale/key detection and detailed pitch measurements. No changes to saved recordings or exports.
+
+
+- 1.1.14 · Added optional detailed vocal note measurements showing note name, time interval, estimated frequency in Hz, and cents deviation from nearest equal-tempered note (A4=440 Hz). Existing detection, key ranking and experimental SoundTouch tools retained; no audio edits.
+
+
+- 1.1.13 · Finalized analysis-first Vocal Pitch panel: scale/key detection remains prominent; experimental real-time pitch correction is retained in a collapsible advanced section with explicit limitations. Re-analysis turns off active correction, and pitch/speed reset also disables correction. Existing transpose and SoundTouch engine remain available; recordings and exports unchanged.
+
+
+- 1.1.12 · Fixed missed update checks: app now requests a service worker update at startup and when returning to foreground, not just on network reconnection. Preserves opt-in activation and offline storage.
+
+
+- 1.1.11 · Experimental non-destructive real-time note-by-note pitch correction via existing local SoundTouch worklet. After analyzing a monophonic vocal recording, enable the pitch engine and toggle Pitch correction ON. Strength 0–100%; correction follows detected note intervals and selected scale, resetting to base transpose outside notes. Effects/export remain original-only; mobile timing and artifacts need testing.
+
+
+- 1.1.10 · Added Detect key to Vocal Note Curve. Ranks all 12 major and 12 natural-minor scales using duration-weighted detected notes, shows percentage of note duration in scale and flags ambiguous matches. Auto-selects suggested key and mode for correction preview; no audio changes.
+
+
+- 1.1.9 · Added key and major/minor/chromatic scale selection to the vocal note analysis. Each detected segment now shows the nearest scale-note correction suggestion (preview only); no audio is altered.
+
+
+- 1.1.8 · Vocal note segmentation beta: group stable detected pitch frames into note intervals, display note names and timestamps, and tap a note to start playback at its onset. Detection is approximate; no automatic tuning or audio changes are applied.
+
+
+- 1.1.7 · Improved vocal pitch detection with adaptive silence threshold, 45 ms frame spacing, brief-gap interpolation and connected note curve labeled with note names. Still an experimental monophonic detector, not pitch correction.
+
+
+- 1.1.6 · Added optional offline vocal pitch map (beta): analyze up to 90 seconds of monophonic audio and show detected MIDI pitches over time. Approximate autocorrelation detection may miss quiet notes or report octave errors. No pitch correction is applied.
+
+
+- 1.1.5 · Added reset for SoundTouch pitch and playback speed, smoothed SoundTouch speed updates and added a clear warning when combined processing may create artifacts. Auto-Tune, multi-track and rendered FX export remain future work.
+
+
+- 1.1.4 · Replaced broken external SoundTouch imports with local vendor paths. GitHub Actions workflow builds the pinned 2.1.1 node bundle and processor into vendor/; app-shell caching includes both. Deployment requires successful workflow build and commit; otherwise the new service worker intentionally refuses incomplete shell installation.
+
+
+- 1.1.3 · Experimental opt-in SoundTouchJS AudioWorklet live transposition (±5 semitones). Uses external pinned CDN modules for this feasibility test, so first activation requires network and offline operation is not guaranteed. Existing playback and original recordings remain available as fallback; iOS audio testing is pending.
+
+
+- 1.1.2 · Removed the unsuccessful granular transpose beta due to hollow, quiet vocals and unreliable pitch changes. Existing audio tools remain unchanged; a more suitable pitch-shifting engine will be evaluated before reintroducing transpose.
+
+
+- 1.1.1 · Added opt-in experimental offline granular transpose preview (±7 semitones, max 30 seconds) that preserves playback duration, with a return-to-original button. Source recordings and original exports remain unchanged; grain artifacts are expected and mobile performance is unverified.
+
+
+- 1.1.0 · Temporarily disabled the unreliable transpose and global pitch-assist UI. Restored predictable playback-speed behavior while a tempo-preserving pitch engine is designed. No original recordings changed.
+
+
+- 1.0.99 · Corrected outdated version labels in footer and About; bumped service worker cache to distribute updated app shell.
+
+
+- 1.0.98 · Added semitone transpose and experimental dominant-pitch assist in Neon DAW. Pitch changes use playback rate and therefore affect tempo. Not full note-by-note Auto-Tune; original recordings remain untouched.
+
+
+- 1.0.97 · Neon DAW exports the marked IN/OUT passage as a 16-bit PCM WAV file without changing the original recording. Export selection activates only for valid markers. Live effects are not baked into WAV exports.
+
+
+- 1.0.96 · Fixed Neon DAW loop playback with frame-based IN/OUT boundary checks and end-of-track restart, including Safari-friendly handling.
+
+
+- 1.0.95 · Renamed Recording Studio to Neon DAW; added waveform zoom, IN/OUT markers and non-destructive loop playback. Planned: integration with Piano, Erik’s Synth and Drum Machine (not implemented yet).
+
+
+- 1.0.94 · Redesigned Recording Studio as responsive Neon DAW with fixed transport area, prominent seekable waveform timeline, compact FX rack, desktop library sidebar and mobile library drawer; retained original recordings and audio engine.
+
+
+- 1.0.93 · Recording Studio adds waveform display, live reverb and echo with delay controls, and neon-pink styling for light and dark modes. Practice Studio renamed to Practice Room in the interface.
+
+
+- 1.0.92 · Introduced Recording Studio: microphone recording, audio import, local IndexedDB library, playback speed, rename, deletion and original-file export. First step toward non-destructive effects and multi-track editing.
+
+
+- 1.0.91 · Added Cache All Audio Samples in General Settings with progress and retry support for missing Grand Piano and drum samples. Preserved existing sample caches across service-worker updates.
 
 - 1.0.90 · Standardized all Ear Trainer exercise back buttons to “← Ear Trainer” with consistent purple navigation styling. Sing the Note now matches the Ear Trainer purple palette in light and dark themes, while keeping neon-green correct-pitch feedback.
 
-- 1.0.89 · Practice Studio now opens only on an intentional tap/click, not during a swipe. Sing the Note uses ±50-cent tolerance with a short dropout grace period while preserving cents feedback, and glows neon green only when the target is detected.
+- 1.0.89 · Practice Room now opens only on an intentional tap/click, not during a swipe. Sing the Note uses ±50-cent tolerance with a short dropout grace period while preserving cents feedback, and glows neon green only when the target is detected.
 
-- 1.0.88 · Practice Studio eyebrow matches neon magenta theme. Sing the Note gains coordinated Ear Trainer light/dark styling, octave-independent pitch option, automatic challenge advancement after 1.5 seconds of correct singing, and three-second piano/sine reference playback using Ear Trainer General Settings.
+- 1.0.88 · Practice Room eyebrow matches neon magenta theme. Sing the Note gains coordinated Ear Trainer light/dark styling, octave-independent pitch option, automatic challenge advancement after 1.5 seconds of correct singing, and three-second piano/sine reference playback using Ear Trainer General Settings.
 
-- 1.0.87 · Practice Studio adds a persistent Practice Timer usable while navigating other tools, editable completion notes and ratings, reusable multi-block session templates, weekly goals by instrument and progress, plus harmonized All tools navigation styling in Piano and Practice Studio.
+- 1.0.87 · Practice Room adds a persistent Practice Timer usable while navigating other tools, editable completion notes and ratings, reusable multi-block session templates, weekly goals by instrument and progress, plus harmonized All tools navigation styling in Piano and Practice Room.
 
-- 1.0.86 · General Audio Samples Status now checks Grand Piano, electronic and acoustic Drum Kit caches and explains the synthesized kit; About copy simplified, daily average clarified, Practice Studio touch entry improved.
+- 1.0.86 · General Audio Samples Status now checks Grand Piano, electronic and acoustic Drum Kit caches and explains the synthesized kit; About copy simplified, daily average clarified, Practice Room touch entry improved.
 
-- 1.0.85 · Add Session supports daily, weekly and selected-weekday recurring schedules with end dates and vacation-day exclusions; date navigation gains previous/next day arrows. Practice Studio now uses coordinated neon-violet accents and a matching rounded home icon in light and dark themes.
+- 1.0.85 · Add Session supports daily, weekly and selected-weekday recurring schedules with end dates and vacation-day exclusions; date navigation gains previous/next day arrows. Practice Room now uses coordinated neon-violet accents and a matching rounded home icon in light and dark themes.
 
-- 1.0.84 · Practice Studio gains neon magenta home icon, proper light/dark theme colors, detailed instrument/date/rating insights, daily and weekly averages, vacation calendar days excluded from statistics and new goal plans, Singing naming, and mobile date-input layout fix.
+- 1.0.84 · Practice Room gains neon magenta home icon, proper light/dark theme colors, detailed instrument/date/rating insights, daily and weekly averages, vacation calendar days excluded from statistics and new goal plans, Singing naming, and mobile date-input layout fix.
 
-- 1.0.83 · Simplified Practice Studio Overview: upcoming sessions first, then calendar, then time statistics. Removed hero, recent sessions and goals from Overview; completed history stays in Sessions. Tightened header spacing and centered calendar month arrows.
+- 1.0.83 · Simplified Practice Room Overview: upcoming sessions first, then calendar, then time statistics. Removed hero, recent sessions and goals from Overview; completed history stays in Sessions. Tightened header spacing and centered calendar month arrows.
 
-- 1.0.82 · Practice Studio goal plans now include five progressive learning phases, specific session tasks, milestone progress and rescheduling of missed sessions into free practice days before the deadline. Existing local sessions and goals remain supported.
+- 1.0.82 · Practice Room goal plans now include five progressive learning phases, specific session tasks, milestone progress and rescheduling of missed sessions into free practice days before the deadline. Existing local sessions and goals remain supported.
 
-- 1.0.81 · Practice Studio redesign: prominent upcoming sessions, separate history, larger colorful calendar, navigation tabs, session editing, instrument filters, goal management, progress insights, and new home-screen icon.
+- 1.0.81 · Practice Room redesign: prominent upcoming sessions, separate history, larger colorful calendar, navigation tabs, session editing, instrument filters, goal management, progress insights, and new home-screen icon.
 
-- 1.0.80 · First implementation of Practice Studio (local calendar, completed/planned sessions, multiple instruments, statistics, goal scheduling, voice recovery reminder) and Ear Trainer Sing the Note (named note/chord/scale reference, microphone pitch feedback). Further guided lessons and planning refinements to follow.
+- 1.0.80 · First implementation of Practice Room (local calendar, completed/planned sessions, multiple instruments, statistics, goal scheduling, voice recovery reminder) and Ear Trainer Sing the Note (named note/chord/scale reference, microphone pitch feedback). Further guided lessons and planning refinements to follow.
 
 - 1.0.79 · Home screen version label; README and About clarify that Perfect Pitch belongs to the Ear Trainer.
 
