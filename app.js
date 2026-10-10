@@ -2,6 +2,7 @@ import { NOTES, MIN_NOTE, MAX_NOTE, noteName, pitchClass, isCorrect, chooseNote,
 import { createStore } from './storage.js';
 import { TonePlayer } from './audio.js';
 import { sharedPiano } from './piano-audio.js';
+import { getEarSound } from './ear-settings.js';
 const $ = id => document.getElementById(id);
 const warning = message => { $('warning').textContent = message; $('warning').hidden = false; };
 let local;
@@ -12,14 +13,14 @@ const audio = new TonePlayer();
 let question = null, previous = null, answers = [], session = null, completed = false;
 let audioBusy = false, playbackId = 0, animationTimer, playingReference = null;
 let pianoTrainingNote = null, pianoTrainingTimer = null;
-const trainingKeys = ['min', 'max', 'duration', 'blind', 'length', 'details', 'reference', 'referenceNote', 'autoplay', 'avoidRepeat', 'sound'];
+const trainingKeys = ['min', 'max', 'duration', 'blind', 'length', 'details', 'reference', 'referenceNote', 'autoplay', 'avoidRepeat', 'pitchClasses'];
 const persist = () => store.save(settings, stats);
 const systemTheme = matchMedia('(prefers-color-scheme: dark)');
 function applyAppearance() {
   const theme = settings.theme === 'system' ? (systemTheme.matches ? 'dark' : 'light') : settings.theme;
   document.documentElement.dataset.theme = theme;
   document.documentElement.dataset.animations = String(settings.animations);
-  document.querySelector('meta[name=theme-color]').content = theme === 'dark' ? '#111a18' : '#f5f4ef';
+  document.querySelector('meta[name=theme-color]').content = theme === 'dark' ? '#111a18' : '#f3f7fc';
 }
 systemTheme.addEventListener('change', applyAppearance);
 function stopAudio() {
@@ -32,7 +33,9 @@ function stopAudio() {
 function beginQuestion() {
   stopAudio();
   if (!session) session = { blind: settings.blind, length: settings.length, details: settings.details, started: new Date().toISOString() };
-  const note = chooseNote(settings.min, settings.max, previous, settings.avoidRepeat);
+  const candidates=Array.from({length:settings.max-settings.min+1},(_,i)=>settings.min+i).filter(midi=>settings.pitchClasses.includes(pitchClass(midi)));
+  const pool=settings.avoidRepeat&&candidates.length>1?candidates.filter(midi=>midi!==previous):candidates;
+  const note=pool[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0]/4294967296*pool.length)] ?? chooseNote(settings.min,settings.max,previous,settings.avoidRepeat);
   previous = note;
   question = { note, played: false, answered: false, answer: null };
   render();
@@ -41,7 +44,7 @@ function render() {
   const blind = session?.blind ?? settings.blind;
   $('mode-label').textContent = blind ? `BLIND SESSION · ${Math.min(answers.length + (completed ? 0 : 1), session?.length ?? settings.length)} OF ${session?.length ?? settings.length}` : 'LISTEN · RECOGNIZE · REPEAT';
   $('question-title').textContent = completed ? 'Session complete.' : 'Find the note.';
-  $('question-subtitle').textContent = blind ? 'Trust your ear. Results stay hidden until the end.' : settings.sound === 'piano' ? 'One piano note. Twelve possibilities.' : 'One pure tone. Twelve possibilities.';
+  $('question-subtitle').textContent = blind ? 'Trust your ear. Results stay hidden until the end.' : getEarSound() === 'piano' ? 'One piano note. Twelve possibilities.' : 'One pure tone. Twelve possibilities.';
   $('play-label').textContent = question?.played ? 'Play Again' : 'Play Note';
   $('play').disabled = audioBusy || completed;
   $('play-help').textContent = completed ? 'Start a new session whenever you’re ready.' : question?.played ? 'Replay as often as you like.' : 'Listen, then choose a note below.';
@@ -93,7 +96,7 @@ async function playTone(reference = false) {
   try {
     const midi = reference ? settings.referenceNote : current.note;
     let played;
-    if (settings.sound === 'piano') {
+    if (getEarSound() === 'piano') {
       audio.stop();
       $('play-help').textContent = 'Preparing Grand Piano samples (first use may take a while)…';
       await sharedPiano.load((done,total)=>{
@@ -192,8 +195,14 @@ function field(parent, key, label, options) {
 function buildSettings() {
   $('settings-fields').replaceChildren();
   let parent = section('Training');
-  field(parent, 'sound', 'Sound', [['sine', 'Sine wave'], ['piano', 'Grand Piano']]);
+  const sharedSoundNote=document.createElement('p'); sharedSoundNote.className='section-help'; sharedSoundNote.textContent='Sound: managed in Ear Trainer → Settings (applies to all ear exercises).'; parent.append(sharedSoundNote);
   field(parent, 'min', 'Minimum note', noteOptions); field(parent, 'max', 'Maximum note', noteOptions);
+  const pitchBox=document.createElement('div'); pitchBox.className='pitch-picker';
+  const pitchTitle=document.createElement('strong'); pitchTitle.textContent='Notes to test';
+  const pitchHelp=document.createElement('p'); pitchHelp.className='section-help'; pitchHelp.textContent='Choose which notes can be played. At least one must stay selected.';
+  const pitchGrid=document.createElement('div'); pitchGrid.className='pitch-picker-grid';
+  NOTES.forEach((name,i)=>{const b=document.createElement('button');b.type='button';b.className='pitch-picker-button';b.textContent=name;b.dataset.pitch=String(i);b.setAttribute('aria-pressed',String(settings.pitchClasses.includes(i)));b.addEventListener('click',()=>{const selected=[...pitchGrid.children].filter(x=>x.getAttribute('aria-pressed')==='true');if(b.getAttribute('aria-pressed')==='true'&&selected.length===1)return;b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true'));});pitchGrid.append(b);});
+  pitchBox.append(pitchTitle,pitchHelp,pitchGrid);parent.append(pitchBox);
   field(parent, 'duration', 'Tone duration', [[0.5, '0.5 seconds'], [1, '1 second'], [2, '2 seconds'], [4, '4 seconds']]);
   field(parent, 'blind', 'Blind training mode'); field(parent, 'length', 'Blind session length', [[10, '10 questions'], [20, '20 questions'], [50, '50 questions']]);
   field(parent, 'details', 'Detailed session results'); field(parent, 'reference', 'Enable reference note'); field(parent, 'referenceNote', 'Reference note', noteOptions);
@@ -213,7 +222,7 @@ function buildSettings() {
   parent = section('Training display');
   [['score', 'Score on main screen'], ['mainStreak', 'Streak on main screen'], ['feedback', 'Visual feedback colors']].forEach(([key, label]) => field(parent, key, label));
   parent = section('About'); parent.classList.add('about');
-  parent.innerHTML += `<p><strong>Perfect Pitch Trainer · Version 1.0.0</strong></p><p>Identify one of twelve pitch classes. Every octave of C counts as C. Choose sine waves or sampled Grand Piano tones, tuned to A4 = 440 Hz. Piano samples require an internet connection for their first load. This is a practice tool, not a guarantee of acquiring perfect pitch.</p><p>Offline: once “Ready for offline use” appears, the app’s essential files are cached. Install it from Safari’s Share menu → Add to Home Screen. Check this status again inside the installed app.</p><p>Privacy: settings and statistics stay in your browser on this device. No accounts, advertising, analytics, external APIs, or uploaded training data. The host receives ordinary requests for app files when online. Clearing website data, removing the app, or browser cache eviction can remove local progress and offline access. Devices do not sync.</p><p>Updates: a new version downloads in the background while online. Tap “Update available” when you are ready to restart. Settings and statistics are preserved.</p><p>History stores up to 100 completed sessions when collection stayed on for every answer and saving history is on at completion. Partially uncollected sessions are never saved. Turning collection off resets the current persistent streak. Statistics resets are independent; resetting one does not rewrite others.</p>`;
+  parent.innerHTML += `<p><strong>Perfect Pitch Trainer · Version 1.0.0</strong></p><p>Identify one of twelve pitch classes. Every octave of C counts as C. Choose sine waves or sampled Grand Piano tones in Ear Trainer Settings, tuned to A4 = 440 Hz. Piano samples require an internet connection for their first load. This is a practice tool, not a guarantee of acquiring perfect pitch.</p><p>Offline: once “Ready for offline use” appears, the app’s essential files are cached. Install it from Safari’s Share menu → Add to Home Screen. Check this status again inside the installed app.</p><p>Privacy: settings and statistics stay in your browser on this device. No accounts, advertising, analytics, external APIs, or uploaded training data. The host receives ordinary requests for app files when online. Clearing website data, removing the app, or browser cache eviction can remove local progress and offline access. Devices do not sync.</p><p>Updates: a new version downloads in the background while online. Tap “Update available” when you are ready to restart. Settings and statistics are preserved.</p><p>History stores up to 100 completed sessions when collection stayed on for every answer and saving history is on at completion. Partially uncollected sessions are never saved. Turning collection off resets the current persistent streak. Statistics resets are independent; resetting one does not rewrite others.</p>`;
   validateRange();
 }
 function validateRange() {
@@ -236,7 +245,10 @@ $('settings-form').addEventListener('submit', event => {
     if (!(input.name in settings)) continue;
     next[input.name] = input.type === 'checkbox' ? input.checked : typeof settings[input.name] === 'number' ? Number(input.value) : input.value;
   }
-  const draftTraining = trainingKeys.some(key => next[key] !== settings[key]);
+  next.pitchClasses=[...document.querySelectorAll('.pitch-picker-button[aria-pressed="true"]')].map(b=>Number(b.dataset.pitch));
+  if(!next.pitchClasses.length)return;
+  if(!Array.from({length:next.max-next.min+1},(_,i)=>next.min+i).some(m=>next.pitchClasses.includes(pitchClass(m)))){alert('No selected notes fall within your minimum and maximum note range.');return;}
+  const draftTraining = trainingKeys.some(key => key==='pitchClasses' ? next.pitchClasses.join(',')!==settings.pitchClasses.join(',') : next[key] !== settings[key]);
   if (draftTraining && (question?.played || answers.length) && !completed) {
     if (!confirm('Changing training settings starts a fresh session. Current session results will be cleared; already collected statistics remain. Apply these settings?')) return;
   }
