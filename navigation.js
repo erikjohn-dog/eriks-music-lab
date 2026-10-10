@@ -11,6 +11,7 @@ const synth = document.getElementById('synth-stage');
 const drums = document.getElementById('drums-stage');
 const practiceStudio = document.getElementById('practice-studio-stage');
 const singNote = document.getElementById('sing-note-stage');
+const recordingStudio = document.getElementById('recording-studio-stage');
 const navigation = document.getElementById('training-navigation');
 const settingsButton = document.getElementById('settings-open');
 const brand = document.querySelector('.brand');
@@ -25,7 +26,8 @@ function show(view) {
   const inDrums = view === 'drums';
   const inPracticeStudio = view === 'practice-studio';
   const inSingNote = view === 'sing-note';
-  home.hidden = inEarLearning || inEarMenu || inTraining || inPiano || inTuner || inMetronome || inSynth || inDrums || inPracticeStudio || inSingNote;
+  const inRecordingStudio = view === 'recording-studio';
+  home.hidden = inEarLearning || inEarMenu || inTraining || inPiano || inTuner || inMetronome || inSynth || inDrums || inPracticeStudio || inSingNote || inRecordingStudio;
   training.hidden = !inTraining;
   earMenu.hidden = !inEarMenu;
   earLearning.hidden = !inEarLearning;
@@ -36,8 +38,10 @@ function show(view) {
   drums.hidden = !inDrums;
   practiceStudio.hidden = !inPracticeStudio;
   singNote.hidden = !inSingNote;
+  recordingStudio.hidden = !inRecordingStudio;
   navigation.hidden = !inTraining;
-  settingsButton.hidden = inEarLearning || inEarMenu || inPiano || inTuner || inMetronome || inSynth || inDrums || inPracticeStudio || inSingNote;
+  settingsButton.hidden = inEarLearning || inEarMenu || inPiano || inTuner || inMetronome || inSynth || inDrums || inPracticeStudio || inSingNote || inRecordingStudio;
+  if (!inRecordingStudio) document.dispatchEvent(new Event('musiclab:recording-studio-hidden'));
   if (!inSingNote) document.dispatchEvent(new Event('musiclab:sing-note-hidden'));
   if (!inMetronome) document.dispatchEvent(new Event('musiclab:metronome-hidden'));
   if (!inSynth) document.dispatchEvent(new Event('musiclab:synth-hidden'));
@@ -63,6 +67,8 @@ practiceCard.addEventListener('click',()=>show('practice-studio'));
 document.getElementById('practice-studio-back').addEventListener('click', () => show('home'));
 document.getElementById('open-sing-note').addEventListener('click', () => show('sing-note'));
 document.getElementById('sing-note-back').addEventListener('click', () => show('ear-trainer'));
+document.getElementById('open-recording-studio').addEventListener('click', () => show('recording-studio'));
+document.getElementById('recording-studio-back').addEventListener('click', () => show('home'));
 document.getElementById('open-piano').addEventListener('click', () => show('piano'));
 document.getElementById('open-tuner').addEventListener('click', () => show('tuner'));
 document.getElementById('tuner-back').addEventListener('click', () => show('home'));
@@ -97,3 +103,24 @@ generalForm.addEventListener('submit', event => {
 });
 document.getElementById('general-settings-close').addEventListener('click', () => generalDialog.close());
 show('home');
+
+// Edge swipe back on touch devices. Avoid sliders, wave editing and horizontally
+// scrollable controls. Only a rightward swipe beginning at the left screen edge.
+let backSwipe=null;
+document.addEventListener('touchstart',e=>{
+  if(e.touches.length!==1||e.touches[0].clientX>28||!home.hidden)return;
+  if(e.target.closest('input,select,textarea,button,canvas,a,[contenteditable],.rs-wave-wrap,.rs-edit-toolbar,.rs-effect-grid'))return;
+  backSwipe={x:e.touches[0].clientX,y:e.touches[0].clientY};
+},{passive:true});
+document.addEventListener('touchend',e=>{
+  if(!backSwipe||!e.changedTouches.length)return;
+  const dx=e.changedTouches[0].clientX-backSwipe.x,dy=e.changedTouches[0].clientY-backSwipe.y;
+  backSwipe=null;
+  if(dx<85||Math.abs(dy)>Math.abs(dx)*.65)return;
+  if(!earLearning.hidden){show('ear-trainer');return;}
+  if(!training.hidden){show('ear-trainer');return;}
+  if(!earMenu.hidden){show('home');return;}
+  if(!singNote.hidden){show('ear-trainer');return;}
+  show('home');
+},{passive:true});
+document.addEventListener('touchcancel',()=>{backSwipe=null;},{passive:true});
