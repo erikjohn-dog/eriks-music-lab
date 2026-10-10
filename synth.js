@@ -45,7 +45,7 @@ async function audio(){if(!ctx){const AC=window.AudioContext||window.webkitAudio
 function frequency(midi){return 440*Math.pow(2,(midi-69)/12);}
 function release(note){const v=voices.get(note);if(!v||!ctx)return;voices.delete(note);order=order.filter(x=>x!==note);const t=ctx.currentTime,rel=Math.max(.02,Number(v.release));v.gain.gain.cancelScheduledValues(t);v.gain.gain.setTargetAtTime(0,t,rel/4);for(const osc of v.osc)try{osc.stop(t+rel+.15);}catch{}for(const lfo of v.lfos)try{lfo.stop(t+rel+.15);}catch{}updateCount();}
 function updateCount(){document.getElementById('synth-voice-count').textContent=voices.size+' VOICES';}
-async function press(note){held.add(note);if(voices.has(note))return;const token=generation;try{await audio();if(token!==generation||stage.hidden||!held.has(note))return;if(document.getElementById('synth-mono').checked){for(const previous of [...voices.keys()])release(previous);}else if(voices.size>=8)release(order[0]);const t=ctx.currentTime,settings={...p},f=frequency(note),is808=preset.value==='808',amp=ctx.createGain(),filter=ctx.createBiquadFilter();filter.type=settings.filtertype;filter.frequency.value=Number(settings.cutoff);filter.Q.value=Number(settings.resonance);filter.connect(amp).connect(driveNode);
+async function press(note){held.add(note);if(voices.has(note))return;const token=generation;try{if(!ctx||ctx.state!=='running')await audio();if(token!==generation||stage.hidden||!held.has(note))return;if(document.getElementById('synth-mono').checked){for(const previous of [...voices.keys()])release(previous);}else if(voices.size>=8)release(order[0]);const t=ctx.currentTime,settings={...p},f=frequency(note),is808=preset.value==='808',amp=ctx.createGain(),filter=ctx.createBiquadFilter();filter.type=settings.filtertype;filter.frequency.value=Number(settings.cutoff);filter.Q.value=Number(settings.resonance);filter.connect(amp).connect(driveNode);
 const a=Math.max(.005,Number(settings.attack)),d=Math.max(.02,Number(settings.decay)),sus=clamp(Number(settings.sustain),0,1);
 amp.gain.setValueAtTime(0,t);amp.gain.linearRampToValueAtTime(.7,t+a);amp.gain.setTargetAtTime(Math.max(.0001,.7*sus),t+a,d/3);
 const osc=[],lfos=[];function addOsc(type,level,detune,sub=false){if(level<=0)return;const o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.value=sub?f/2:f;o.detune.value=detune;g.gain.value=level;o.connect(g).connect(filter);o.start(t);osc.push(o);return o;}
@@ -60,8 +60,37 @@ voices.set(note,{gain:amp,filter,osc,lfos,release:settings.release});order.push(
 function lift(note){held.delete(note);release(note);keyboard.querySelectorAll('[data-midi="'+note+'"]').forEach(k=>k.classList.remove('pressed'));}
 function allOff(){generation++;held.clear();lastFrequency=null;for(const note of [...voices.keys()])lift(note);pointers.clear();keyboard.querySelectorAll('.pressed').forEach(k=>k.classList.remove('pressed'));}
 function buildKeyboard(){allOff();keyboard.replaceChildren();const oct=Number(document.getElementById('synth-octave').value),baseMidi=12*(oct+1),black=new Set([1,3,6,8,10]);let white=0;for(let n=0;n<24;n++){const semi=n%12,midi=baseMidi+n,isBlack=black.has(semi),key=document.createElement('button');key.type='button';key.dataset.midi=String(midi);key.className='synth-key '+(isBlack?'black':'white');key.style.left=(isBlack?white*48-15:white*48)+'px';if(!isBlack){white++;if(semi===0)key.textContent='C'+(oct+Math.floor(n/12));}key.setAttribute('aria-label','Play MIDI note '+midi);keyboard.append(key);}}
-keyboard.addEventListener('pointerdown',e=>{const key=e.target.closest('.synth-key');if(!key)return;e.preventDefault();const note=Number(key.dataset.midi);pointers.set(e.pointerId,note);try{key.setPointerCapture(e.pointerId);}catch{}press(note);});
-function pointerEnd(e){if(!pointers.has(e.pointerId))return;const note=pointers.get(e.pointerId);pointers.delete(e.pointerId);lift(note);}
+function synthKeyAt(x,y){
+ const hit=document.elementFromPoint(x,y);
+ const key=hit?.closest('.synth-key');
+ return key&&key.parentElement===keyboard?key:null;
+}
+keyboard.addEventListener('pointerdown',e=>{
+ if(e.pointerType==='mouse'&&e.button!==0)return;
+ const key=e.target.closest('.synth-key');if(!key)return;
+ e.preventDefault();
+ const note=Number(key.dataset.midi);
+ pointers.set(e.pointerId,note);
+ try{keyboard.setPointerCapture(e.pointerId)}catch{}
+ press(note);
+});
+keyboard.addEventListener('pointermove',e=>{
+ if(!pointers.has(e.pointerId))return;
+ e.preventDefault();
+ const key=synthKeyAt(e.clientX,e.clientY);
+ if(!key)return;
+ const note=Number(key.dataset.midi),previous=pointers.get(e.pointerId);
+ if(note===previous)return;
+ pointers.set(e.pointerId,note);
+ if(![...pointers.values()].includes(previous))lift(previous);
+ press(note);
+});
+function pointerEnd(e){
+ if(!pointers.has(e.pointerId))return;
+ const note=pointers.get(e.pointerId);
+ pointers.delete(e.pointerId);
+ if(![...pointers.values()].includes(note))lift(note);
+}
 for(const type of ['pointerup','pointercancel','lostpointercapture'])keyboard.addEventListener(type,pointerEnd);
 document.getElementById('synth-octave').addEventListener('change',()=>{buildKeyboard();save();});
 document.getElementById('synth-panic').addEventListener('click',allOff);
