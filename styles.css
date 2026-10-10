@@ -582,3 +582,197 @@ body:has(#home:not([hidden])) .icon-button{background:var(--surface);border:1px 
 :root[data-theme=light] #piano-staff-notes line{stroke:#385fc4}
 :root[data-theme=light] #piano-staff-notes ellipse{fill:#385fc4}
 :root[data-theme=light] #piano-staff-notes text{fill:#385fc4}
+
+/* Practice Studio and Sing the Note */
+#practice-studio-stage,#sing-note-stage{width:min(100%,1000px);margin:0 auto;padding:24px 18px 50px}
+.ps-panel{border:1px solid var(--border,rgba(128,128,128,.22));border-radius:20px;padding:18px;margin:16px 0;background:var(--surface,rgba(128,128,128,.05))}
+.ps-panel h2{font-size:1.2rem;margin:0 0 14px}.ps-panel label{display:flex;flex-direction:column;gap:6px;margin:10px 0;font-size:.9rem}
+.ps-panel input,.ps-panel select,.ps-panel textarea{width:100%;min-width:0;padding:11px;border:1px solid rgba(128,128,128,.4);border-radius:10px;background:var(--card-bg,var(--surface,transparent));color:inherit;font:inherit}
+.ps-panel textarea{resize:vertical}.ps-panel fieldset{border:1px solid rgba(128,128,128,.25);border-radius:12px;margin:14px 0;padding:10px}
+.ps-panel .ps-check{display:inline-flex;align-items:center;gap:5px;margin:6px 12px 6px 0}.ps-check input{width:auto}
+.ps-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0}.ps-stats>div{border-radius:14px;padding:14px 10px;background:var(--surface,rgba(128,128,128,.1));display:flex;flex-direction:column;gap:7px}.ps-stats small,.ps-entry small{opacity:.7}.ps-stats strong{font-size:1.25rem}
+.ps-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.ps-heading button,.ps-entry button,#sing-next{border:1px solid rgba(128,128,128,.35);border-radius:9px;background:transparent;color:inherit;padding:7px 11px;cursor:pointer}
+.ps-weekdays,.ps-calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;text-align:center}.ps-weekdays{font-size:.75rem;opacity:.7;margin:12px 0 6px}
+.ps-day{min-width:0;min-height:55px;border:1px solid rgba(128,128,128,.25);border-radius:10px;background:transparent;color:inherit;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer}.ps-day small{font-size:.63rem;opacity:.75}.ps-today{border-color:currentColor}
+.ps-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}.ps-entry{display:flex;justify-content:space-between;gap:10px;align-items:center;border-bottom:1px solid rgba(128,128,128,.2);padding:12px 0}.ps-entry>div:first-child{min-width:0}.ps-entry small{display:block}.ps-entry p{margin:4px 0;overflow-wrap:anywhere}.ps-entry>div:last-child{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.sing-target{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;padding:20px 0}.sing-target small{opacity:.7;letter-spacing:.1em}.sing-target h1{font-size:3rem}.sing-target h2{font-size:1.8rem}
+@media(max-width:480px){.ps-panel{padding:12px}.ps-stats strong{font-size:1rem}.ps-day{min-height:44px}.ps-day small{font-size:.55rem}.ps-fields{grid-template-columns:1fr}}
+
+/* Practice Studio 1.0.81 — premium calendar and journal */
+#practice-studio-stage{width:min(100%,1120px);padding-inline:clamp(12px,3vw,32px)}
+.ps-shell{--ps-ink:#123b43;--ps-teal:#117e7e;--ps-blue:#476fc2;--ps-gold:#e8b667;--ps-soft:rgba(17,126,126,.07)}
+.ps-tabs{display:flex;gap:7px;overflow-x:auto;padding:7px 0 15px;scrollbar-width:thin}
+.ps-tabs button{flex:0 0 auto;padding:11px 17px;border-radius:999px;border:1px solid rgba(105,145,155,.28);background:transparent;color:inherit;font:inherit;font-size:.86rem;font-weight:600;cursor:pointer}
+.ps-tabs button.active{background:#117e7e;border-color:#117e7e;color:white;box-shadow:0 6px 20px rgba(17,126,126,.22)}
+.ps-hero{background:linear-gradient(120deg,#104b5d 0%,#127b80 60%,#5599a1 100%);border-radius:22px;color:white;padding:clamp(20px,4vw,34px);margin:4px 0 18px;box-shadow:0 15px 35px rgba(11,72,86,.17)}
+.ps-hero h2{color:white;font-size:clamp(1.5rem,3.2vw,2.2rem);margin:7px 0}.ps-hero p{color:rgba(255,255,255,.85);margin:0 0 18px}
+.ps-kicker{font-size:.68rem;font-weight:800;letter-spacing:.14em;color:#148a86;text-transform:uppercase}.ps-hero .ps-kicker{color:#c7f4e6}
+.ps-hero-action{background:#fff;color:#105a62;border:0;border-radius:12px;padding:11px 17px;font:inherit;font-weight:700;cursor:pointer}
+.ps-shell .ps-stats>div{background:linear-gradient(145deg,rgba(18,126,125,.12),rgba(72,111,194,.07));border:1px solid rgba(29,137,143,.17);border-radius:16px;padding:19px 14px}
+.ps-shell .ps-stats strong{color:#168783;font-size:clamp(1.12rem,2.5vw,1.7rem);font-weight:800}
+.ps-shell .ps-panel{background:linear-gradient(160deg,rgba(119,180,180,.055),rgba(130,153,215,.045));border:1px solid rgba(97,144,156,.25);box-shadow:0 5px 22px rgba(21,60,78,.045);border-radius:21px;padding:clamp(16px,3vw,26px);margin:18px 0}
+.ps-shell .ps-panel h2{font-size:1.3rem;margin:4px 0 10px}.ps-shell .ps-panel h3{margin:24px 0 8px;font-size:1.04rem}
+.ps-shell .ps-upcoming{border-left:4px solid #117e7e}
+.ps-soft-button,.ps-text-link{border:1px solid rgba(17,126,126,.35);color:#158b89;background:rgba(17,126,126,.07);border-radius:11px;padding:9px 13px;cursor:pointer;font:inherit;font-weight:650;font-size:.82rem}
+.ps-text-link{border:0;background:transparent;padding:7px}
+.ps-month-nav{display:flex;align-items:center;gap:12px}.ps-month-nav strong{min-width:125px;text-align:center;font-size:.9rem}.ps-month-nav button{width:36px;height:36px;border-radius:50%;border:1px solid rgba(17,126,126,.25);background:rgba(17,126,126,.07);color:inherit;font-size:1.5rem;cursor:pointer}
+.ps-calendar-large{gap:clamp(4px,1vw,10px)}.ps-calendar-large .ps-day{min-height:clamp(68px,10vw,105px);background:rgba(120,171,179,.065);border-radius:13px;gap:6px;transition:background .15s,border-color .15s}
+.ps-calendar-large .ps-day strong{font-size:1rem}.ps-calendar-large .ps-day small{font-size:.68rem;min-height:12px}
+.ps-calendar-large .ps-day.ps-today{background:rgba(17,126,126,.12);border-color:#158b89}
+.ps-calendar-large .ps-day.ps-selected{outline:2px solid #148a86;outline-offset:1px;background:rgba(17,126,126,.11)}
+.ps-dots{display:flex;gap:5px;min-height:8px}.ps-dots i,.ps-calendar-legend i{display:inline-block;width:8px;height:8px;border-radius:50%}.ps-dot-done{background:#1d9b82}.ps-dot-plan{background:#d7a04c}
+.ps-calendar-legend{display:flex;gap:20px;margin:15px 0;font-size:.76rem;opacity:.8}.ps-calendar-legend span{display:flex;gap:7px;align-items:center}
+.ps-day-detail{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid rgba(128,128,128,.2);padding-top:15px}.ps-day-detail small{display:block;opacity:.65;margin-top:3px}
+.ps-shell .ps-entry{gap:14px;padding:15px 0}.ps-entry-main{flex:1}.ps-entry-main strong{font-size:.96rem}.ps-entry-main small{margin-top:5px}.ps-entry-actions{display:flex;gap:5px;flex-wrap:wrap}
+.ps-entry-actions button{font-size:.75rem;padding:7px 9px}.ps-empty{opacity:.65;font-size:.9rem;padding:10px 0}
+.ps-form-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.ps-goal-entry{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid rgba(128,128,128,.2)}.ps-goal-entry small{display:block;opacity:.7;margin-top:4px}
+.ps-insight{margin:17px 0}.ps-insight>div:first-child{display:flex;justify-content:space-between;font-size:.86rem;margin-bottom:7px}.ps-bar{height:9px;border-radius:9px;background:rgba(128,128,128,.17);overflow:hidden}.ps-bar i{display:block;height:100%;background:linear-gradient(90deg,#1a9b8e,#5476c3);border-radius:9px}
+.ps-voice-note{padding:16px 20px;border-left:4px solid #e3a34c;background:rgba(227,163,76,.09);border-radius:12px}.ps-voice-note p{margin:6px 0 0;font-size:.87rem}
+.ps-save-status,.ps-local-note{font-size:.76rem;opacity:.7;margin:12px 0}
+@media(max-width:520px){.ps-shell .ps-panel{padding:14px}.ps-calendar-large .ps-day{min-height:62px;border-radius:9px}.ps-calendar-large .ps-day small{font-size:.58rem}.ps-month-nav{gap:4px}.ps-month-nav strong{min-width:110px}.ps-shell .ps-stats>div{padding:12px 8px}.ps-entry-actions button{font-size:.72rem}}
+
+/* Practice Studio goal milestones */
+.ps-goal-card{border:1px solid rgba(17,126,126,.19);border-radius:16px;padding:15px;margin:15px 0;background:linear-gradient(135deg,rgba(17,126,126,.07),rgba(71,111,194,.05))}
+.ps-goal-card .ps-goal-entry{border-bottom:0;padding:0 0 10px}
+.ps-milestones{display:grid;gap:13px;margin:12px 0 18px}
+.ps-milestone{display:flex;align-items:flex-start;gap:12px}
+.ps-milestone-number{flex:0 0 29px;height:29px;border-radius:50%;display:grid;place-items:center;background:#127e80;color:#fff;font-weight:700;font-size:.78rem}
+.ps-milestone strong{display:block;font-size:.86rem}
+.ps-milestone small{display:block;opacity:.72;line-height:1.5;margin-top:3px}
+.ps-progress{height:9px;border-radius:12px;background:rgba(128,128,128,.18);overflow:hidden;margin:10px 0 7px}
+.ps-progress span{display:block;height:100%;background:linear-gradient(90deg,#139e88,#5277c5);border-radius:12px}
+.ps-goal-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.ps-stage-label{color:#168783;font-weight:650}
+
+/* Preview 1.0.83 — compact Practice Studio header and centered month controls */
+#practice-studio-stage{padding-top:0!important}
+#practice-studio-stage>.back-home{margin-top:0!important;margin-bottom:12px!important}
+#practice-studio-stage>.eyebrow{margin-top:0!important}
+#practice-studio-stage>h1{margin-top:8px!important}
+.ps-month-nav button{display:inline-flex!important;align-items:center!important;justify-content:center!important;line-height:1!important;padding:0!important;vertical-align:middle!important;flex:0 0 36px}
+.ps-month-nav{display:flex;align-items:center;justify-content:center}
+.ps-time-statistics .ps-stats{margin:10px 0 0}
+@media(max-width:520px){#practice-studio-stage>.back-home{margin-bottom:8px!important}}
+
+/* Practice Studio: native light/dark palettes, neon home icon, mobile-safe forms */
+#open-practice-studio .module-icon{color:#db32ff!important;filter:drop-shadow(0 0 8px rgba(219,50,255,.27))}
+#practice-studio-stage .ps-shell{--ps-text:#202a39;--ps-sub:#626e80;--ps-panel:#ffffff;--ps-border:#d6e2e8;--ps-input:#f8fbff;--ps-chip:#e7f6f5;--ps-tint:#f1f8fa}
+#practice-studio-stage .ps-shell .ps-panel{background:var(--ps-panel);border-color:var(--ps-border);color:var(--ps-text)}
+#practice-studio-stage .ps-shell .ps-stats>div{background:var(--ps-tint);border-color:var(--ps-border)}
+#practice-studio-stage .ps-shell .ps-stats strong{color:#087b77}
+#practice-studio-stage .ps-shell .ps-kicker,#practice-studio-stage .ps-shell .ps-text-link{color:#087b77}
+#practice-studio-stage .ps-shell .ps-soft-button{color:#087b77;background:var(--ps-chip);border-color:var(--ps-border)}
+#practice-studio-stage .ps-shell .ps-day{background:var(--ps-input);border-color:var(--ps-border);color:var(--ps-text)}
+#practice-studio-stage .ps-shell .ps-day.ps-today{background:var(--ps-chip);border-color:#148a86}
+#practice-studio-stage .ps-shell .ps-day.ps-selected{background:var(--ps-chip)}
+#practice-studio-stage .ps-shell .ps-month-nav button{color:var(--ps-text);background:var(--ps-chip);border-color:var(--ps-border)}
+#practice-studio-stage .ps-shell .ps-panel input,#practice-studio-stage .ps-shell .ps-panel select,#practice-studio-stage .ps-shell .ps-panel textarea{background:var(--ps-input);border-color:var(--ps-border);color:var(--ps-text);color-scheme:light}
+#practice-studio-stage .ps-shell .ps-goal-card{background:var(--ps-tint);border-color:var(--ps-border)}
+#practice-studio-stage .ps-shell .ps-tabs button:not(.active){background:var(--ps-panel);border-color:var(--ps-border);color:var(--ps-text)}
+#practice-studio-stage .ps-shell .ps-voice-note{color:var(--ps-text)}
+:root[data-theme=dark] #practice-studio-stage .ps-shell{--ps-text:#edf4ff;--ps-sub:#b3c1d6;--ps-panel:#172238;--ps-border:#30435f;--ps-input:#101b2e;--ps-chip:#1a404a;--ps-tint:#1b3046}
+:root[data-theme=dark] #practice-studio-stage .ps-shell .ps-stats strong{color:#65e0d3}
+:root[data-theme=dark] #practice-studio-stage .ps-shell .ps-kicker,:root[data-theme=dark] #practice-studio-stage .ps-shell .ps-text-link,:root[data-theme=dark] #practice-studio-stage .ps-shell .ps-soft-button{color:#79e5d8}
+:root[data-theme=dark] #practice-studio-stage .ps-shell .ps-panel input,:root[data-theme=dark] #practice-studio-stage .ps-shell .ps-panel select,:root[data-theme=dark] #practice-studio-stage .ps-shell .ps-panel textarea{color-scheme:dark}
+:root[data-theme=dark] #practice-studio-stage .ps-shell .ps-voice-note{background:#413324;border-color:#f0b968}
+#practice-studio-stage .ps-shell,#practice-studio-stage .ps-shell *{min-width:0}
+#practice-studio-stage .ps-shell .ps-panel label{max-width:100%}
+#practice-studio-stage .ps-shell input[type=date]{display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box;-webkit-appearance:none;appearance:none}
+#practice-studio-stage .ps-shell .ps-fields{min-width:0;grid-template-columns:repeat(2,minmax(0,1fr))}
+#practice-studio-stage .ps-shell .ps-fields>label{min-width:0}
+.ps-day-actions{display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-end}
+.ps-calendar-large .ps-day.ps-vacation{background:repeating-linear-gradient(135deg,rgba(178,110,210,.13),rgba(178,110,210,.13) 7px,transparent 7px,transparent 14px)!important;border-color:#ad65ce!important}
+.ps-calendar-large .ps-day.ps-vacation strong{color:#aa58d3}
+.ps-dot-vacation{background:#b468d4}
+.ps-insight-filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ps-insight-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ps-breakdown{display:grid;gap:2px}
+.ps-breakdown>div{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:10px 4px;border-bottom:1px solid var(--ps-border);font-size:.84rem}
+.ps-breakdown>div span{text-align:right}
+@media(max-width:520px){#practice-studio-stage .ps-shell .ps-fields,.ps-insight-filters{grid-template-columns:1fr}.ps-insight-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.ps-day-detail{align-items:flex-start;flex-wrap:wrap}.ps-day-actions{width:100%;justify-content:flex-start}}
+
+/* Practice Studio 1.0.85 — coordinated neon-violet accent */
+#open-practice-studio{--tool-accent:#b32eff}
+#open-practice-studio .module-icon{color:#bf36ff!important;background:rgba(189,54,255,.13)!important;border:1px solid rgba(189,54,255,.19);border-radius:16px;filter:none!important}
+#open-practice-studio .module-action{color:#b32eff}
+#practice-studio-stage .ps-shell{--ps-violet:#9431d6;--ps-violet-soft:#f5eafb;--ps-violet-line:#e4c8f5;--ps-chip:var(--ps-violet-soft);--ps-tint:#f9f1ff}
+#practice-studio-stage .ps-shell .ps-tabs button.active{background:#9332d3;border-color:#9332d3;box-shadow:0 6px 20px rgba(147,50,211,.22)}
+#practice-studio-stage .ps-shell .ps-stats strong,#practice-studio-stage .ps-shell .ps-kicker,#practice-studio-stage .ps-shell .ps-text-link,#practice-studio-stage .ps-shell .ps-soft-button{color:var(--ps-violet)}
+#practice-studio-stage .ps-shell .ps-soft-button{border-color:var(--ps-violet-line)}
+#practice-studio-stage .ps-shell .ps-upcoming{border-left-color:#a53bdf}
+#practice-studio-stage .ps-shell .ps-day.ps-today{border-color:#b448ed}
+#practice-studio-stage .ps-shell .ps-day.ps-selected{outline-color:#a53bdf}
+#practice-studio-stage .ps-shell .ps-milestone-number{background:#983bd4}
+#practice-studio-stage .ps-shell .ps-progress span,#practice-studio-stage .ps-shell .ps-bar i{background:linear-gradient(90deg,#a735e5,#6867d8)}
+#practice-studio-stage .ps-shell .ps-stage-label{color:var(--ps-violet)}
+:root[data-theme=dark] #practice-studio-stage .ps-shell{--ps-violet:#d99aff;--ps-violet-soft:#352246;--ps-violet-line:#67417d;--ps-chip:#352246;--ps-tint:#281e3b}
+:root[data-theme=dark] #practice-studio-stage .ps-shell .ps-stats strong{color:#d99aff}
+:root[data-theme=dark] #practice-studio-stage .ps-shell .ps-kicker,:root[data-theme=dark] #practice-studio-stage .ps-shell .ps-text-link,:root[data-theme=dark] #practice-studio-stage .ps-shell .ps-soft-button{color:#d99aff}
+:root[data-theme=dark] #open-practice-studio .module-icon{color:#e29aff!important;background:rgba(189,54,255,.2)!important}
+.ps-date-stepper{display:flex;align-items:stretch;gap:6px;width:100%;min-width:0}
+#practice-studio-stage .ps-shell .ps-date-stepper input[type=date]{flex:1 1 auto;width:0;min-width:0;max-width:100%}
+.ps-date-stepper button{flex:0 0 34px;display:grid;place-items:center;border:1px solid var(--ps-border);border-radius:10px;background:var(--ps-chip);color:var(--ps-violet);font-size:1.4rem;line-height:1;padding:0}
+.ps-repeat-fieldset{border-color:var(--ps-border)!important}
+.ps-repeat-fieldset[hidden],#ps-repeat-settings[hidden],#ps-repeat-weekdays[hidden]{display:none!important}
+@media(max-width:520px){.ps-date-stepper button{flex-basis:38px}}
+
+/* Unified audio cache status and touch-first Practice Studio entry */
+#sample-cache-status{white-space:pre-line;line-height:1.75}
+@media(hover:none){#open-practice-studio:hover{transform:none}}
+
+/* Preview 1.0.87: consistent back links and floating Practice Timer */
+#piano-stage .piano-return{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:7px 0!important;color:var(--accent)!important}
+#practice-studio-back{color:#b439ed!important;background:transparent!important}
+:root[data-theme=dark] #practice-studio-back{color:#d99aff!important}
+#ps-floating-timer:not([hidden]){position:fixed;z-index:900;bottom:calc(16px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:min(calc(100vw - 28px),530px);box-sizing:border-box;padding:11px 15px;border:1px solid rgba(190,104,240,.5);border-radius:18px;background:#211b38;color:#f6eeff;box-shadow:0 9px 35px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:space-between;gap:12px}
+#ps-floating-timer[hidden]{display:none!important}
+#ps-floating-timer strong{display:block;font-variant-numeric:tabular-nums}
+#ps-floating-timer small{display:block;font-size:.72rem;color:#c7b7dd}
+.ps-timer-actions{display:flex;gap:7px}
+.ps-timer-actions button{background:#a53bdf;color:white;border:0;border-radius:10px;padding:9px 11px;font:inherit;font-size:.8rem;font-weight:650}
+.ps-timer-clock{font-size:clamp(2.5rem,9vw,5rem);font-weight:800;text-align:center;font-variant-numeric:tabular-nums;color:var(--ps-violet);padding:15px}
+.ps-timer-segment{display:flex;justify-content:space-between;gap:12px;padding:12px;border-bottom:1px solid var(--ps-border)}
+.ps-timer-segment.current{border-left:4px solid #aa48e7;background:var(--ps-tint)}
+.ps-template-row{display:grid;grid-template-columns:2fr 1fr;gap:12px;margin:10px 0}
+.ps-weekly-goal{padding:12px 0;border-bottom:1px solid var(--ps-border)}
+@media(max-width:520px){#ps-floating-timer:not([hidden]){bottom:calc(12px + env(safe-area-inset-bottom));padding:10px 12px}.ps-template-row{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}}
+
+/* Preview 1.0.88: Practice Studio accent and Ear Trainer voice styling */
+#practice-studio-stage>.eyebrow{color:#b439ed!important}
+:root[data-theme=dark] #practice-studio-stage>.eyebrow{color:#d99aff!important}
+#sing-note-stage{--sing-accent:#5773d5;--sing-panel:#f5f7ff;--sing-border:#d5ddf5;--sing-text:#1b2b4d}
+#sing-note-stage>.eyebrow,#sing-note-stage>.back-home{color:var(--sing-accent)}
+#sing-note-stage .ps-panel{background:var(--sing-panel);border:1px solid var(--sing-border);color:var(--sing-text);box-shadow:0 8px 28px rgba(45,72,145,.06);border-radius:22px;padding:clamp(18px,4vw,30px)}
+#sing-note-stage .sing-target{border-radius:18px;padding:24px 14px;background:linear-gradient(155deg,rgba(87,115,213,.11),rgba(116,94,203,.04))}
+#sing-note-stage .sing-target h1{color:var(--sing-accent);font-size:clamp(2.6rem,10vw,4.5rem)}
+#sing-note-stage .sing-target h2{color:var(--sing-text)}
+#sing-note-stage .primary{background:var(--sing-accent);color:white;border-color:var(--sing-accent)}
+#sing-note-stage #sing-next{color:var(--sing-accent);background:transparent;border:1px solid var(--sing-border);border-radius:12px;padding:11px 18px}
+#sing-note-stage .ps-panel select{background:#fff;color:var(--sing-text);border-color:var(--sing-border)}
+#sing-note-stage .sing-option{display:flex;flex-direction:row;align-items:center;gap:10px;padding:12px 0}
+#sing-note-stage .sing-option input{width:20px;min-width:20px;height:20px;accent-color:var(--sing-accent)}
+:root[data-theme=dark] #sing-note-stage{--sing-accent:#9cafff;--sing-panel:#19243b;--sing-border:#364766;--sing-text:#eff3ff}
+:root[data-theme=dark] #sing-note-stage .sing-target{background:linear-gradient(155deg,rgba(98,119,209,.2),rgba(112,80,175,.08))}
+:root[data-theme=dark] #sing-note-stage .ps-panel select{background:#111a2d;color:#eff3ff}
+:root[data-theme=dark] #sing-note-stage .primary{background:#6c83e4;color:#fff}
+
+/* Preview 1.0.89 — only correctly detected notes glow neon green */
+#sing-note-stage .sing-target h1#sing-target{transition:color .14s ease,text-shadow .14s ease,filter .14s ease}
+#sing-note-stage .sing-target h1#sing-target.sing-note-correct{color:#19ee73!important;text-shadow:0 0 9px rgba(25,238,115,.7),0 0 25px rgba(25,238,115,.48),0 0 44px rgba(25,238,115,.2);filter:brightness(1.08)}
+
+/* Preview 1.0.90: shared Ear Trainer purple navigation and Sing the Note theme */
+#ear-menu-back,#ear-learning-back,#back-home,#sing-note-back{color:#a877db!important;background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:7px 0!important;font-weight:650!important}
+:root[data-theme=dark] #ear-menu-back,:root[data-theme=dark] #ear-learning-back,:root[data-theme=dark] #back-home,:root[data-theme=dark] #sing-note-back{color:#c9a6ff!important}
+#sing-note-stage{--sing-accent:#9757c9;--sing-panel:#f7f2fc;--sing-border:#dfd0ee;--sing-text:#28203d}
+#sing-note-stage>.eyebrow,#sing-note-stage>.back-home{color:var(--sing-accent)!important}
+#sing-note-stage .ps-panel{background:var(--sing-panel);border-color:var(--sing-border);color:var(--sing-text)}
+#sing-note-stage .sing-target{background:linear-gradient(155deg,rgba(175,117,228,.16),rgba(128,82,185,.07))}
+#sing-note-stage .sing-target h1:not(.sing-note-correct){color:var(--sing-accent)}
+#sing-note-stage .primary{background:#b98af0!important;border-color:#b98af0!important;color:#20152e!important}
+#sing-note-stage #sing-next{color:var(--sing-accent);border-color:var(--sing-border)}
+#sing-note-stage .ps-panel select{border-color:var(--sing-border)}
+:root[data-theme=dark] #sing-note-stage{--sing-accent:#c9a6ff;--sing-panel:#211f35;--sing-border:#453856;--sing-text:#f3edff}
+:root[data-theme=dark] #sing-note-stage .ps-panel{background:linear-gradient(140deg,#242139,#1b2435);border-color:#403856}
+:root[data-theme=dark] #sing-note-stage .sing-target{background:linear-gradient(155deg,rgba(155,94,208,.19),rgba(118,79,168,.08))}
+:root[data-theme=dark] #sing-note-stage .primary{background:#c9a0fa!important;border-color:#c9a0fa!important;color:#21142e!important}
+#sing-note-stage #sing-target.sing-note-correct{color:#19ee73!important}
