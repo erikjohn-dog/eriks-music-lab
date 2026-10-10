@@ -583,7 +583,7 @@ body:has(#home:not([hidden])) .icon-button{background:var(--surface);border:1px 
 :root[data-theme=light] #piano-staff-notes ellipse{fill:#385fc4}
 :root[data-theme=light] #piano-staff-notes text{fill:#385fc4}
 
-/* Practice Studio and Sing the Note */
+/* Practice Room and Sing the Note */
 #practice-studio-stage,#sing-note-stage{width:min(100%,1000px);margin:0 auto;padding:24px 18px 50px}
 .ps-panel{border:1px solid var(--border,rgba(128,128,128,.22));border-radius:20px;padding:18px;margin:16px 0;background:var(--surface,rgba(128,128,128,.05))}
 .ps-panel h2{font-size:1.2rem;margin:0 0 14px}.ps-panel label{display:flex;flex-direction:column;gap:6px;margin:10px 0;font-size:.9rem}
@@ -598,7 +598,7 @@ body:has(#home:not([hidden])) .icon-button{background:var(--surface);border:1px 
 .sing-target{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;padding:20px 0}.sing-target small{opacity:.7;letter-spacing:.1em}.sing-target h1{font-size:3rem}.sing-target h2{font-size:1.8rem}
 @media(max-width:480px){.ps-panel{padding:12px}.ps-stats strong{font-size:1rem}.ps-day{min-height:44px}.ps-day small{font-size:.55rem}.ps-fields{grid-template-columns:1fr}}
 
-/* Practice Studio 1.0.81 — premium calendar and journal */
+/* Practice Room 1.0.81 — premium calendar and journal */
 #practice-studio-stage{width:min(100%,1120px);padding-inline:clamp(12px,3vw,32px)}
 .ps-shell{--ps-ink:#123b43;--ps-teal:#117e7e;--ps-blue:#476fc2;--ps-gold:#e8b667;--ps-soft:rgba(17,126,126,.07)}
 .ps-tabs{display:flex;gap:7px;overflow-x:auto;padding:7px 0 15px;scrollbar-width:thin}
@@ -631,7 +631,7 @@ body:has(#home:not([hidden])) .icon-button{background:var(--surface);border:1px 
 .ps-save-status,.ps-local-note{font-size:.76rem;opacity:.7;margin:12px 0}
 @media(max-width:520px){.ps-shell .ps-panel{padding:14px}.ps-calendar-large .ps-day{min-height:62px;border-radius:9px}.ps-calendar-large .ps-day small{font-size:.58rem}.ps-month-nav{gap:4px}.ps-month-nav strong{min-width:110px}.ps-shell .ps-stats>div{padding:12px 8px}.ps-entry-actions button{font-size:.72rem}}
 
-/* Practice Studio goal milestones */
+/* Practice Room goal milestones */
 .ps-goal-card{border:1px solid rgba(17,126,126,.19);border-radius:16px;padding:15px;margin:15px 0;background:linear-gradient(135deg,rgba(17,126,126,.07),rgba(71,111,194,.05))}
 .ps-goal-card .ps-goal-entry{border-bottom:0;padding:0 0 10px}
 .ps-milestones{display:grid;gap:13px;margin:12px 0 18px}
@@ -644,7 +644,7 @@ body:has(#home:not([hidden])) .icon-button{background:var(--surface);border:1px 
 .ps-goal-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
 .ps-stage-label{color:#168783;font-weight:650}
 
-/* Preview 1.0.83 — compact Practice Studio header and centered month controls */
+/* Preview 1.0.83 — compact Practice Room header and centered month controls */
 #practice-studio-stage{padding-top:0!important}
 #practice-studio-stage>.back-home{margin-top:0!important;margin-bottom:12px!important}
 #practice-studio-stage>.eyebrow{margin-top:0!important}
@@ -654,7 +654,7 @@ body:has(#home:not([hidden])) .icon-button{background:var(--surface);border:1px 
 .ps-time-statistics .ps-stats{margin:10px 0 0}
 @media(max-width:520px){#practice-studio-stage>.back-home{margin-bottom:8px!important}}
 
-/* Practice Studio: native light/dark palettes, neon home icon, mobile-safe forms */
+/* Practice Room: native light/dark palettes, neon home icon, mobile-safe forms */
 #open-practice-studio .module-icon{color:#db32ff!important;filter:drop-shadow(0 0 8px rgba(219,50,255,.27))}
 #practice-studio-stage .ps-shell{--ps-text:#202a39;--ps-sub:#626e80;--ps-panel:#ffffff;--ps-border:#d6e2e8;--ps-input:#f8fbff;--ps-chip:#e7f6f5;--ps-tint:#f1f8fa}
 #practice-studio-stage .ps-shell .ps-panel{background:var(--ps-panel);border-color:var(--ps-border);color:var(--ps-text)}
@@ -691,7 +691,7 @@ body:has(#home:not([hidden])) .icon-button{background:var(--surface);border:1px 
 .ps-breakdown>div span{text-align:right}
 @media(max-width:520px){#practice-studio-stage .ps-shell .ps-fields,.ps-insight-filters{grid-template-columns:1fr}.ps-insight-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.ps-day-detail{align-items:flex-start;flex-wrap:wrap}.ps-day-actions{width:100%;justify-content:flex-start}}
 
-/* Practice Studio 1.0.85 — coordinated neon-violet accent */
+/* Practice Room 1.0.85 — coordinated neon-violet accent */
 #open-practice-studio{--tool-accent:#b32eff}
 #open-practice-studio .module-icon{color:#bf36ff!important;background:rgba(189,54,255,.13)!important;border:1px solid rgba(189,54,255,.19);border-radius:16px;filter:none!important}
 #open-practice-studio .module-action{color:#b32eff}
@@ -716,7 +716,7 @@ body:has(#home:not([hidden])) .icon-button{background:var(--surface);border:1px 
 .ps-repeat-fieldset[hidden],#ps-repeat-settings[hidden],#ps-repeat-weekdays[hidden]{display:none!important}
 @media(max-width:520px){.ps-date-stepper button{flex-basis:38px}}
 
-/* Unified audio cache status and touch-first Practice Studio entry */
+/* Unified audio cache status and touch-first Practice Room entry */
 #sample-cache-status{white-space:pre-line;line-height:1.75}
 @media(hover:none){#open-practice-studio:hover{transform:none}}
 
@@ -737,7 +737,7 @@ body:has(#home:not([hidden])) .icon-button{background:var(--surface);border:1px 
 .ps-weekly-goal{padding:12px 0;border-bottom:1px solid var(--ps-border)}
 @media(max-width:520px){#ps-floating-timer:not([hidden]){bottom:calc(12px + env(safe-area-inset-bottom));padding:10px 12px}.ps-template-row{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}}
 
-/* Preview 1.0.88: Practice Studio accent and Ear Trainer voice styling */
+/* Preview 1.0.88: Practice Room accent and Ear Trainer voice styling */
 #practice-studio-stage>.eyebrow{color:#b439ed!important}
 :root[data-theme=dark] #practice-studio-stage>.eyebrow{color:#d99aff!important}
 #sing-note-stage{--sing-accent:#5773d5;--sing-panel:#f5f7ff;--sing-border:#d5ddf5;--sing-text:#1b2b4d}
@@ -776,3 +776,94 @@ body:has(#home:not([hidden])) .icon-button{background:var(--surface);border:1px 
 :root[data-theme=dark] #sing-note-stage .sing-target{background:linear-gradient(155deg,rgba(155,94,208,.19),rgba(118,79,168,.08))}
 :root[data-theme=dark] #sing-note-stage .primary{background:#c9a0fa!important;border-color:#c9a0fa!important;color:#21142e!important}
 #sing-note-stage #sing-target.sing-note-correct{color:#19ee73!important}
+
+
+/* Preview 1.0.93: neon-pink Recording Studio, both themes */
+#recording-studio-stage{--rs-accent:#dc168e;--rs-panel:#fff0f9;--rs-border:#ffc0e8;--rs-text:#4b183b}
+#recording-studio-stage>.eyebrow,#recording-studio-back{color:var(--rs-accent)!important}
+#open-recording-studio .module-icon{color:#fa43bb;background:rgba(255,62,183,.14);border-radius:16px}
+#open-recording-studio{--module-accent:#f440b5}
+.rs-panel{background:var(--rs-panel);border:1px solid var(--rs-border);border-radius:20px;padding:clamp(14px,4vw,24px);margin:18px 0;color:var(--rs-text);min-width:0}
+.rs-panel h2{margin:0 0 14px}.rs-controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:16px}.rs-panel audio{width:100%;display:block;margin:16px 0}.rs-panel input[type=text],.rs-panel input[type=file]{max-width:100%;min-width:0;box-sizing:border-box}.rs-panel input[type=range]{width:100%;accent-color:var(--rs-accent)}.rs-panel .primary{background:#f326a9;color:white;border-color:#f326a9}.rs-panel .secondary{border-color:var(--rs-border);color:var(--rs-text)}.rs-library-row{display:flex;gap:8px;align-items:center;justify-content:space-between;margin:8px 0}.rs-library-row .secondary{flex:1;min-width:0;overflow-wrap:anywhere;text-align:left}.rs-panel button{max-width:100%}
+#rs-waveform{display:block;width:100%;height:130px;border-radius:14px;background:#ffe1f2;margin:12px 0}.rs-effect-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:16px 0}.rs-effect-grid .field{min-width:0}
+:root[data-theme=dark] #recording-studio-stage{--rs-accent:#ff76d4;--rs-panel:#32172d;--rs-border:#74415e;--rs-text:#ffe9f7}
+:root[data-theme=dark] #recording-studio-stage .rs-panel .primary{background:#ff65c9;color:#301126;border-color:#ff65c9}
+:root[data-theme=dark] #rs-waveform{background:#451e3a}
+:root[data-theme=dark] #open-recording-studio .module-icon{color:#ff80d8;background:rgba(255,86,192,.17)}
+
+/* Preview 1.0.94 — responsive Neon DAW workspace */
+#recording-studio-stage{--rs-bg:#f9f7fb;--rs-surface:#fff;--rs-surface2:#f2eaf2;--rs-border:#e7d5e4;--rs-ink:#35243a;--rs-muted:#806c80;--rs-neon:#e919a2;--rs-wave:#ed3aaf;--rs-grid:#e8d8e5;max-width:1500px;margin-inline:auto;color:var(--rs-ink)}
+#recording-studio-stage .rs-app{background:var(--rs-bg);color:var(--rs-ink);border:1px solid var(--rs-border);border-radius:18px;overflow:hidden;margin:8px 0 28px}
+.rs-header,.rs-transport,.rs-pane-title,.rs-track-header,.rs-transport-actions,.rs-brand,.rs-clock,.rs-transport-meta{display:flex;align-items:center}
+.rs-header{gap:16px;padding:12px 16px;background:var(--rs-surface);border-bottom:1px solid var(--rs-border)}
+.rs-header .back-home{white-space:nowrap;font-size:.82rem}.rs-brand{gap:9px;flex:1;min-width:0}.rs-brand-icon{display:grid;place-items:center;background:var(--rs-neon);color:white;width:34px;height:34px;border-radius:9px;font-size:25px}.rs-brand strong{font-size:.85rem;letter-spacing:.1em}.rs-brand small{display:block;font-size:.59rem;letter-spacing:.13em;color:var(--rs-muted)}
+#recording-studio-stage button{cursor:pointer}#recording-studio-stage button:disabled{opacity:.35;cursor:default}.rs-tool-button,.rs-mini-button,.rs-import-button{border:1px solid var(--rs-border);background:var(--rs-surface2);color:var(--rs-ink);border-radius:8px;padding:8px 11px;font-size:.8rem;white-space:nowrap}
+.rs-transport{justify-content:space-between;gap:14px;padding:12px 16px;background:var(--rs-surface);border-bottom:1px solid var(--rs-border)}.rs-transport-actions{gap:7px}.rs-transport-actions button{border:1px solid var(--rs-border);background:var(--rs-surface2);color:var(--rs-ink);height:40px;min-width:42px;border-radius:9px;font-weight:700}.rs-transport-actions .rs-record{background:var(--rs-neon);color:white;border-color:var(--rs-neon);padding:0 13px}.rs-clock{flex-direction:column;gap:1px}.rs-clock strong{font-size:1.55rem;font-variant-numeric:tabular-nums;letter-spacing:.06em}.rs-clock small,.rs-transport-meta,.rs-pane-title span{color:var(--rs-muted);font-size:.65rem;letter-spacing:.08em}.rs-transport-meta{flex-direction:column;gap:2px}.rs-status{font-size:.75rem;color:var(--rs-muted);padding:6px 16px;margin:0;border-bottom:1px solid var(--rs-border)}
+.rs-workspace{display:grid;grid-template-columns:minmax(190px,235px) minmax(0,1fr);min-height:420px}.rs-library-panel{background:var(--rs-surface);border-right:1px solid var(--rs-border);padding:13px;min-width:0}.rs-center{min-width:0}.rs-pane-title{justify-content:space-between;gap:8px;padding:12px 14px;border-bottom:1px solid var(--rs-border)}.rs-pane-title strong{font-size:.72rem;letter-spacing:.12em}.rs-import-button{cursor:pointer}.rs-import-button input{display:none}.rs-help{font-size:.7rem;color:var(--rs-muted);line-height:1.5;margin:12px 14px}.rs-library-panel .rs-help{margin:12px 0}.rs-library-row{display:flex;gap:4px;align-items:center;margin:8px 0}.rs-library-row .secondary{flex:1;min-width:0;text-align:left;white-space:normal;overflow-wrap:anywhere;background:var(--rs-surface2);border:1px solid var(--rs-border);color:var(--rs-ink);border-radius:8px;padding:9px;font-size:.72rem}.rs-library-row .text-button{font-size:.65rem;color:var(--rs-neon);border:0;background:transparent;padding:5px}
+.rs-arrangement{min-height:275px}.rs-track-header{gap:9px;padding:11px 14px}.rs-track-icon{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;background:var(--rs-neon);color:white}.rs-track-details{flex:1;min-width:0}.rs-track-details label{display:block;color:var(--rs-muted);font-size:.6rem}.rs-track-details input{border:0;border-bottom:1px solid var(--rs-border);background:transparent;color:var(--rs-ink);font-weight:700;width:100%;max-width:260px;padding:4px 0}.rs-timeline{margin:0 14px 10px;border:1px solid var(--rs-border);border-radius:10px;overflow:hidden}.rs-ruler{display:flex;justify-content:space-between;background:var(--rs-surface2);padding:5px 10px;font-size:.66rem;color:var(--rs-muted)}.rs-wave-wrap{position:relative;background:var(--rs-surface2)}#rs-waveform{width:100%;height:170px;display:block;background:transparent;margin:0;cursor:crosshair;touch-action:manipulation}.rs-playhead{position:absolute;top:0;bottom:0;left:0;border-left:2px solid var(--rs-neon);pointer-events:none}.rs-wave-wrap::before{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(90deg,transparent 0,transparent calc(10% - 1px),var(--rs-grid) calc(10% - 1px),var(--rs-grid) 10%);opacity:.65}#rs-audio{width:calc(100% - 28px);margin:10px 14px 14px;display:block;height:42px}.rs-empty{min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--rs-muted);gap:8px;padding:20px}.rs-empty>span{font-size:45px;color:var(--rs-neon)}.rs-empty strong{font-size:.75rem;letter-spacing:.1em}.rs-empty p{font-size:.8rem;margin:0}
+.rs-fx{border-top:1px solid var(--rs-border);background:var(--rs-surface)}.rs-effect-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 14px}.rs-effect-card{min-width:0;background:var(--rs-surface2);border:1px solid var(--rs-border);border-radius:11px;padding:13px 12px;display:flex;flex-direction:column;gap:12px}.rs-effect-card>span{display:flex;justify-content:space-between;gap:6px;font-size:.7rem;letter-spacing:.04em;font-weight:700}.rs-effect-card b{color:var(--rs-neon);white-space:nowrap}.rs-effect-card small{font-size:.6rem;color:var(--rs-muted);letter-spacing:.12em}.rs-effect-card input{width:100%;accent-color:var(--rs-neon)}
+:root[data-theme=dark] #recording-studio-stage{--rs-bg:#17131c;--rs-surface:#211a27;--rs-surface2:#2f2435;--rs-border:#49344c;--rs-ink:#fff0fc;--rs-muted:#bea7bf;--rs-neon:#ff4fc0;--rs-wave:#ff72d1;--rs-grid:#49344c}
+@media(max-width:760px){.rs-workspace{grid-template-columns:minmax(0,1fr)}.rs-library-panel{display:none;border-right:0;border-bottom:1px solid var(--rs-border)}.rs-app.rs-library-open .rs-library-panel{display:block}.rs-header{gap:9px;padding:10px}.rs-brand strong{font-size:.7rem}.rs-brand small{font-size:.52rem}.rs-transport{padding:10px;gap:6px}.rs-clock strong{font-size:1.2rem}.rs-transport-meta{display:none}.rs-effect-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rs-track-header{flex-wrap:wrap}.rs-header .back-home{font-size:.72rem}}
+@media(min-width:761px){#rs-library-toggle{display:none}}
+
+/* Preview 1.0.95: Neon DAW timeline editing */
+.rs-edit-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 14px;background:var(--rs-surface);border-top:1px solid var(--rs-border)}.rs-edit-toolbar label{font-size:.7rem;color:var(--rs-muted);display:flex;align-items:center;gap:7px}.rs-edit-toolbar input{width:95px;accent-color:var(--rs-neon)}.rs-edit-toolbar .rs-mini-button[aria-pressed=true]{background:var(--rs-neon);color:white}.rs-loop-region{position:absolute;top:0;bottom:0;background:rgba(240,43,171,.2);border-left:2px solid var(--rs-neon);border-right:2px solid var(--rs-neon);pointer-events:none;z-index:1}.rs-playhead{z-index:2}.rs-playhead[hidden],.rs-loop-region[hidden]{display:none}
+
+/* Preview 1.0.97: selection export in Neon DAW */
+.rs-edit-toolbar .rs-export-range{background:var(--rs-neon);color:#fff;border-color:var(--rs-neon);font-weight:700}.rs-edit-toolbar .rs-export-range:disabled{background:var(--rs-surface2);color:var(--rs-muted);border-color:var(--rs-border);opacity:.55}
+
+/* Preview 1.0.98: pitch assist and transpose */
+.rs-pitch-tools{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin:0 14px 14px}.rs-pitch-assist{background:var(--rs-surface2);border:1px solid var(--rs-border);border-radius:11px;padding:12px;display:flex;flex-direction:column;gap:8px;font-size:.75rem}.rs-pitch-assist input{accent-color:var(--rs-neon)}.rs-pitch-assist select{background:var(--rs-surface);color:var(--rs-ink);border:1px solid var(--rs-border);border-radius:7px;padding:7px}.rs-pitch-assist small{color:var(--rs-muted)}@media(max-width:600px){.rs-pitch-tools{grid-template-columns:1fr}}
+
+/* Preview 1.1.6 vocal pitch map */
+.rs-pitch-chart{padding:12px;border:1px solid var(--rs-border);border-radius:12px;margin:10px 0;background:var(--rs-surface2)}.rs-pitch-chart .rs-pitch-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}.rs-pitch-chart strong{font-size:.75rem;letter-spacing:.09em}.rs-pitch-chart canvas{width:100%;height:110px;display:block;border-radius:8px}.rs-pitch-chart small{display:block;color:var(--rs-muted);font-size:.7rem;line-height:1.5;margin-top:7px}
+
+/* Preview 1.1.7 pitch curve readability */
+.rs-pitch-chart canvas{height:150px;touch-action:pan-y}
+
+/* Preview 1.1.8 detected note segments */
+.rs-detected-notes{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.rs-note-chip{border:1px solid var(--rs-border);border-radius:9px;background:var(--rs-surface);color:var(--rs-ink);font-size:.75rem;padding:7px 9px;cursor:pointer}.rs-note-chip:focus-visible{outline:2px solid var(--rs-neon)}
+
+/* Preview 1.1.9 scale correction preview */
+.rs-scale-controls{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:.75rem}.rs-scale-controls select{background:var(--rs-surface);color:var(--rs-ink);border:1px solid var(--rs-border);border-radius:8px;padding:7px}.rs-scale-controls span{color:var(--rs-muted)}.rs-note-chip.rs-note-correction{border-color:var(--rs-neon);color:var(--rs-neon)}
+
+/* Preview 1.1.10 key estimation */
+.rs-key-result{display:block;margin-top:7px;color:var(--rs-muted);font-size:.72rem;line-height:1.5}.rs-scale-controls button:disabled{opacity:.5}
+
+/* Preview 1.1.11 note correction beta */
+.rs-correction-controls{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:10px 0 5px;font-size:.75rem}.rs-correction-controls input{width:100px;max-width:35vw;accent-color:#f032aa}.rs-correction-controls small{flex-basis:100%;color:var(--rs-muted);line-height:1.5}.rs-correction-controls button:disabled{opacity:.5}
+
+/* Preview 1.1.13: analysis first, optional experimental correction */
+.rs-advanced-pitch{margin:12px 0 8px;padding:10px 12px;border:1px solid rgba(240,50,170,.23);border-radius:12px}.rs-advanced-pitch summary{cursor:pointer;font-size:.79rem;font-weight:650;line-height:1.5}.rs-advanced-pitch p{margin:8px 0;color:var(--rs-muted);font-size:.75rem;line-height:1.5}.rs-advanced-pitch:not([open]) .rs-correction-controls{display:none}
+
+/* Preview 1.1.14: vocal note measurements */
+.rs-note-details{margin:10px 0;padding:9px 11px;border:1px solid rgba(240,50,170,.2);border-radius:11px}.rs-note-details summary{cursor:pointer;font-size:.76rem;font-weight:600}.rs-note-detail-table{margin-top:10px;overflow-x:auto}.rs-note-detail-row{display:grid;grid-template-columns:.8fr 1.6fr 1fr .85fr;gap:6px;min-width:285px;padding:7px 0;border-bottom:1px solid rgba(200,160,200,.12);font-size:.73rem;font-variant-numeric:tabular-nums}.rs-note-detail-head{font-weight:700;opacity:.7}.rs-note-details small{display:block;margin-top:8px;line-height:1.5;opacity:.7}
+
+/* Preview 1.1.15: retired experimental automatic correction controls. */
+
+/* Preview 1.1.16: Neon Sampler iPhone touch and consistent card accent */
+#open-recording-studio{--tool-accent:#f440b5;--module-accent:#f440b5}
+#open-recording-studio .module-action{color:#f440b5}
+#open-recording-studio:hover,#open-recording-studio:focus-visible{border-color:#f440b5}
+#rs-waveform{touch-action:none;cursor:ew-resize;user-select:none;-webkit-user-select:none}
+.rs-wave-wrap{touch-action:none}
+.rs-fx-advanced{margin:8px 14px 14px;padding:10px 12px;border:1px solid var(--rs-border);border-radius:12px;background:var(--rs-surface2)}
+.rs-fx-advanced summary{font-weight:700;font-size:.8rem;cursor:pointer;color:var(--rs-neon);padding:5px 0}
+@media(max-width:650px){.rs-effect-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.rs-effect-card{padding:12px 10px;gap:10px}.rs-effect-card input[type=range]{min-height:32px}.rs-edit-toolbar .rs-mini-button{min-height:40px}.rs-wave-wrap #rs-waveform{height:185px}}
+
+/* Preview 1.1.17: collapsible panels, tactile neon rotary controls */
+.rs-pitch-chart>summary,.rs-fx-summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;font-size:.8rem;font-weight:800;letter-spacing:.05em;color:var(--rs-neon);padding:13px 14px}
+.rs-pitch-chart>summary::-webkit-details-marker,.rs-fx-summary::-webkit-details-marker{display:none}
+.rs-pitch-chart>summary::after,.rs-fx-summary::after{content:'＋';font-size:1.1rem}
+.rs-pitch-chart[open]>summary::after,.rs-fx[open]>.rs-fx-summary::after{content:'−'}
+.rs-pitch-content{padding:0 12px 12px}
+.rs-fx>.rs-pane-title{padding-top:4px}
+.rs-knob-shell{display:flex;justify-content:center;padding:4px 0}
+.rs-knob{width:78px;height:78px;border-radius:50%;position:relative;touch-action:none;cursor:ns-resize;outline:none;border:3px solid var(--rs-border);background:radial-gradient(circle at 40% 30%,#555061,#1d1727 72%);box-shadow:inset 0 0 0 4px #282033,0 4px 14px rgba(0,0,0,.23)}
+.rs-knob:focus-visible{outline:3px solid var(--rs-neon);outline-offset:3px}
+.rs-knob-indicator{position:absolute;inset:0;transform:rotate(var(--knob-angle,-135deg))}
+.rs-knob-indicator:before{content:'';position:absolute;width:5px;height:19px;border-radius:4px;background:var(--rs-neon);box-shadow:0 0 9px var(--rs-neon);left:calc(50% - 2.5px);top:8px}
+.rs-effect-card>input[type=range]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.rs-effect-card{position:relative;align-items:stretch}
+.rs-transport{margin:12px 14px}
+@media(max-width:650px){.rs-knob{width:72px;height:72px}.rs-transport{margin:12px 10px}.rs-pitch-chart>summary,.rs-fx-summary{min-height:48px}}
