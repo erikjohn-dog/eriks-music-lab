@@ -1,12 +1,12 @@
 # Erik’s Music Lab
 
-A free, installable music practice web app with **Grand Piano**, **Chromatic Tuner**, **Metronome**, **Synth**, **Drum Machine**, and a guided **Ear Trainer** for pitch, intervals, chords and scales. Explore music, train your ear and build musical confidence at your own pace. Settings and training progress are saved locally; offline use is supported after the app and required audio assets have been cached.
+A free, installable music practice web app with **Grand Piano**, **Chromatic Tuner**, **Metronome**, **Synth**, **Drum Machine**, **Practice Studio**, and a guided **Ear Trainer** for pitch, intervals, chords and scales. Explore music, train your ear and build musical confidence at your own pace. Settings and training progress are saved locally; offline use is supported after the app and required audio assets have been cached.
 
-**App:** https://erikjohn-dog.github.io/eriks-music-lab/
+**Preview app:** https://erikjohn-dog.github.io/eriks-music-lab/
 
 ## Add to your iPhone Home Screen
 
-1. Open the app link above in **Safari** on your iPhone.
+1. Open the Preview link above in **Safari** on your iPhone.
 2. Tap **Share** (or the Safari menu containing Share).
 3. Choose **Add to Home Screen**.
 4. Keep **Open as Web App** enabled if offered, then tap **Add**.
@@ -14,11 +14,33 @@ A free, installable music practice web app with **Grand Piano**, **Chromatic Tun
 
 ## Changelog
 
-- 1.4.0 · Published the completed Ear Trainer, settings improvements, simplified About, Home Screen version label and updated README from Preview to the main app.
+- 1.5.0 · Published Practice Studio with timer, templates, goals, calendar and insights; Sing the Note with pitch tracking and Ear Trainer visual refinements; unified audio sample status and navigation improvements from Preview.
+
+- 1.0.90 · Standardized all Ear Trainer exercise back buttons to “← Ear Trainer” with consistent purple navigation styling. Sing the Note now matches the Ear Trainer purple palette in light and dark themes, while keeping neon-green correct-pitch feedback.
+
+- 1.0.89 · Practice Studio now opens only on an intentional tap/click, not during a swipe. Sing the Note uses ±50-cent tolerance with a short dropout grace period while preserving cents feedback, and glows neon green only when the target is detected.
+
+- 1.0.88 · Practice Studio eyebrow matches neon magenta theme. Sing the Note gains coordinated Ear Trainer light/dark styling, octave-independent pitch option, automatic challenge advancement after 1.5 seconds of correct singing, and three-second piano/sine reference playback using Ear Trainer General Settings.
+
+- 1.0.87 · Practice Studio adds a persistent Practice Timer usable while navigating other tools, editable completion notes and ratings, reusable multi-block session templates, weekly goals by instrument and progress, plus harmonized All tools navigation styling in Piano and Practice Studio.
+
+- 1.0.86 · General Audio Samples Status now checks Grand Piano, electronic and acoustic Drum Kit caches and explains the synthesized kit; About copy simplified, daily average clarified, Practice Studio touch entry improved.
+
+- 1.0.85 · Add Session supports daily, weekly and selected-weekday recurring schedules with end dates and vacation-day exclusions; date navigation gains previous/next day arrows. Practice Studio now uses coordinated neon-violet accents and a matching rounded home icon in light and dark themes.
+
+- 1.0.84 · Practice Studio gains neon magenta home icon, proper light/dark theme colors, detailed instrument/date/rating insights, daily and weekly averages, vacation calendar days excluded from statistics and new goal plans, Singing naming, and mobile date-input layout fix.
+
+- 1.0.83 · Simplified Practice Studio Overview: upcoming sessions first, then calendar, then time statistics. Removed hero, recent sessions and goals from Overview; completed history stays in Sessions. Tightened header spacing and centered calendar month arrows.
+
+- 1.0.82 · Practice Studio goal plans now include five progressive learning phases, specific session tasks, milestone progress and rescheduling of missed sessions into free practice days before the deadline. Existing local sessions and goals remain supported.
+
+- 1.0.81 · Practice Studio redesign: prominent upcoming sessions, separate history, larger colorful calendar, navigation tabs, session editing, instrument filters, goal management, progress insights, and new home-screen icon.
+
+- 1.0.80 · First implementation of Practice Studio (local calendar, completed/planned sessions, multiple instruments, statistics, goal scheduling, voice recovery reminder) and Ear Trainer Sing the Note (named note/chord/scale reference, microphone pitch feedback). Further guided lessons and planning refinements to follow.
 
 - 1.0.79 · Home screen version label; README and About clarify that Perfect Pitch belongs to the Ear Trainer.
 
-Complete recorded changelog from Preview development (all entries preserved from the app’s previous About section; earlier versions without a recorded entry are not reconstructed):
+Complete recorded Preview changelog (all entries preserved from the app’s previous About section; earlier versions without a recorded entry are not reconstructed):
 
 - 1.0.78 · Shortened repository README with Home Screen instructions and full available changelog; redesigned in-app About with features, goals and version only.
 - 1.0.77 · Save settings moved to the top of General Settings, Ear Trainer Settings and Perfect Pitch Settings for easier access.
