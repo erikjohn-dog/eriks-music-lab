@@ -6,7 +6,12 @@ const start = document.getElementById('piano-start');
 // Piano-only settings, stored separately from Perfect Pitch statistics.
 const PIANO_SETTINGS_KEY='eriks-music-lab:piano-settings:v1';
 let pianoSound='piano';
-try { if(JSON.parse(localStorage.getItem(PIANO_SETTINGS_KEY))?.sound==='sine') pianoSound='sine'; } catch {}
+let pianoVolume=1;
+try {
+  const saved=JSON.parse(localStorage.getItem(PIANO_SETTINGS_KEY));
+  if(saved?.sound==='sine') pianoSound='sine';
+  if(Number.isFinite(saved?.volume)) pianoVolume=Math.max(0,Math.min(2,saved.volume));
+} catch {}
 const sineContext=window.AudioContext||window.webkitAudioContext;
 let sineAudio=null;
 const sineVoices=new Map();
@@ -28,7 +33,7 @@ function sineOn(midi){
   const osc=sineAudio.createOscillator(),gain=sineAudio.createGain();
   osc.type='sine';osc.frequency.value=440*2**((midi-69)/12);
   gain.gain.setValueAtTime(0,now);
-  gain.gain.linearRampToValueAtTime(.18,now+.012);
+  gain.gain.linearRampToValueAtTime(.18*pianoVolume,now+.012);
   osc.connect(gain).connect(sineAudio.destination);
   osc.onended=()=>{osc.disconnect();gain.disconnect();};
   sineVoices.set(midi,{osc,gain});
@@ -61,10 +66,27 @@ for(const [value,title] of [['piano','Grand Piano'],['sine','Sine wave']]){
 }
 pianoSoundSelect.value=pianoSound;
 pianoSoundLabel.append(pianoSoundTitle,pianoSoundSelect);
+const pianoVolumeLabel=document.createElement('label');
+pianoVolumeLabel.className='field';
+const pianoVolumeTitle=document.createElement('span');
+pianoVolumeTitle.textContent='Piano volume';
+const pianoVolumeValue=document.createElement('output');
+pianoVolumeValue.textContent=Math.round(pianoVolume*100)+'%';
+const pianoVolumeSlider=document.createElement('input');
+pianoVolumeSlider.type='range';
+pianoVolumeSlider.min='0';pianoVolumeSlider.max='200';pianoVolumeSlider.step='5';
+pianoVolumeSlider.value=String(Math.round(pianoVolume*100));
+pianoVolumeSlider.setAttribute('aria-label','Piano volume');
+pianoVolumeSlider.addEventListener('input',()=>{
+  pianoVolume=Number(pianoVolumeSlider.value)/100;
+  pianoVolumeValue.textContent=pianoVolumeSlider.value+'%';
+  try{localStorage.setItem(PIANO_SETTINGS_KEY,JSON.stringify({sound:pianoSound,volume:pianoVolume}));}catch{}
+});
+pianoVolumeLabel.append(pianoVolumeTitle,pianoVolumeValue,pianoVolumeSlider);
 const pianoSettingsSave=document.createElement('button');
 pianoSettingsSave.className='primary';
 pianoSettingsSave.textContent='Save settings';
-pianoSettingsForm.append(pianoSettingsHeading,pianoSoundLabel,pianoSettingsSave);
+pianoSettingsForm.append(pianoSettingsHeading,pianoSoundLabel,pianoVolumeLabel,pianoSettingsSave);
 pianoSettingsDialog.append(pianoSettingsForm);
 document.body.append(pianoSettingsDialog);
 for(const button of [pianoSettingsButton,portraitSettingsButton]) button.addEventListener('click',()=>pianoSettingsDialog.showModal());
@@ -77,7 +99,7 @@ pianoSettingsForm.addEventListener('submit',()=>{
   for(const midi of [...sineVoices.keys()])sineOff(midi);
   engine.allNotesOff();
   pianoSound=pianoSoundSelect.value;
-  try{localStorage.setItem(PIANO_SETTINGS_KEY,JSON.stringify({sound:pianoSound}));}catch{}
+  try{localStorage.setItem(PIANO_SETTINGS_KEY,JSON.stringify({sound:pianoSound,volume:pianoVolume}));}catch{}
   refreshPianoSound();
 });
 refreshPianoSound();
@@ -216,7 +238,7 @@ function movePianoPointer(id,key){
  }
  const already=[...pointers.entries()].some(([otherId,p])=>otherId!==id&&p.midi===midi);
  key.classList.add('pressed');
- if(!already){if(pianoSound==='sine')sineOn(midi);else engine.noteOn(midi);}
+ if(!already){if(pianoSound==='sine')sineOn(midi);else engine.noteOn(midi,.75,pianoVolume);}
  drawNotation();
 }
 viewport.addEventListener('pointerdown',event=>{
@@ -228,7 +250,7 @@ viewport.addEventListener('pointerdown',event=>{
  pointers.set(event.pointerId,{midi,key,playing:true});
  try{viewport.setPointerCapture(event.pointerId)}catch{}
  key.classList.add('pressed');drawNotation();
- if(pianoSound==='sine')sineOn(midi);else engine.noteOn(midi);
+ if(pianoSound==='sine')sineOn(midi);else engine.noteOn(midi,.75,pianoVolume);
 });
 viewport.addEventListener('pointermove',event=>{
  if(!pointers.has(event.pointerId))return;

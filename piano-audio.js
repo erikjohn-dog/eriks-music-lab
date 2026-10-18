@@ -60,7 +60,7 @@ export class PianoEngine {
     try {await this.loading;} catch(e){this.loading=null;throw e;}
   }
   async resume(){if(this.context?.state==='suspended')await this.context.resume();}
-  noteOn(midi,velocity=.75) {
+  noteOn(midi,velocity=.75,volume=1) {
     if(!this.context||!this.buffers.size) return;
     this.noteOff(midi);
     if(this.active.size>=this.maxVoices) this.noteOff(this.active.keys().next().value,.035);
@@ -72,7 +72,7 @@ export class PianoEngine {
     const gain=this.context.createGain();
     const now=this.context.currentTime;
     gain.gain.setValueAtTime(0,now);
-    gain.gain.linearRampToValueAtTime(Math.max(.01,Math.min(1,velocity))*.7,now+.008);
+    gain.gain.linearRampToValueAtTime(Math.max(.01,Math.min(1,velocity))*.7*Math.max(0,Math.min(2,volume)),now+.008);
     source.connect(gain).connect(this.context.destination);
     const voice={source,gain};
     this.active.set(midi,voice);
