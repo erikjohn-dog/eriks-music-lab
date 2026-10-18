@@ -16,9 +16,11 @@ A free, installable music practice web app with **Grand Piano**, **Chromatic Tun
 
 Neon Sampler supports one audio track at a time: microphone recording (with permission), audio import, local IndexedDB library, rename/delete, original export, waveform scrubbing, zoom, IN/OUT loop selection and trimmed WAV export. Vocal Pitch Analysis estimates monophonic notes, frequency, cents and likely major/minor keys; it is not a calibrated tuner and may miss or misidentify notes. Live reverb, echo, delay, playback speed and optional manual SoundTouch transposition are non-destructive and are **not rendered into exports**. Automatic pitch correction has been removed. Audio-only multitrack recording is a future idea, **not implemented**. Export important takes before clearing browser data or uninstalling the PWA.
 
-Offline use requires an initial online load and cached assets. Updates are offered in the app and may require confirmation and reopening. Before promoting preview to LIVE, test recording, playback, editing, exports, local persistence, offline behavior, audio effects and iPhone gestures on a real device. The release version is 1.6.0. The preview app is maintained separately for future testing.
+Offline use requires an initial online load and cached assets. Updates are offered in the app and may require confirmation and reopening. Before promoting preview to LIVE, test recording, playback, editing, exports, local persistence, offline behavior, audio effects and iPhone gestures on a real device. The release version is 1.6.1. The preview app is maintained separately for future testing.
 
 ## Changelog
+
+- 1.6.1 · Added persistent independent Piano volume control with up to 400% boost for Grand Piano and Sine Wave, plus refreshed offline app cache.
 
 - 1.6.0 · LIVE release of Neon Sampler and the tested preview improvements: single-track recording, waveform controls, vocal pitch analysis, manual SoundTouch transpose, iPhone touch knobs and navigation, plus updated app descriptions and offline cache.
 
