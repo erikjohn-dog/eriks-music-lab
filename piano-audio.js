@@ -72,7 +72,7 @@ export class PianoEngine {
     const gain=this.context.createGain();
     const now=this.context.currentTime;
     gain.gain.setValueAtTime(0,now);
-    gain.gain.linearRampToValueAtTime(Math.max(.01,Math.min(1,velocity))*.7*Math.max(0,Math.min(2,volume)),now+.008);
+    gain.gain.linearRampToValueAtTime(Math.max(.01,Math.min(1,velocity))*.7*Math.max(0,Math.min(4,volume)),now+.008);
     source.connect(gain).connect(this.context.destination);
     const voice={source,gain};
     this.active.set(midi,voice);
