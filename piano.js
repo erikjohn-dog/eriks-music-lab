@@ -10,7 +10,7 @@ let pianoVolume=1;
 try {
   const saved=JSON.parse(localStorage.getItem(PIANO_SETTINGS_KEY));
   if(saved?.sound==='sine') pianoSound='sine';
-  if(Number.isFinite(saved?.volume)) pianoVolume=Math.max(0,Math.min(2,saved.volume));
+  if(Number.isFinite(saved?.volume)) pianoVolume=Math.max(0,Math.min(4,saved.volume));
 } catch {}
 const sineContext=window.AudioContext||window.webkitAudioContext;
 let sineAudio=null;
@@ -74,7 +74,7 @@ const pianoVolumeValue=document.createElement('output');
 pianoVolumeValue.textContent=Math.round(pianoVolume*100)+'%';
 const pianoVolumeSlider=document.createElement('input');
 pianoVolumeSlider.type='range';
-pianoVolumeSlider.min='0';pianoVolumeSlider.max='200';pianoVolumeSlider.step='5';
+pianoVolumeSlider.min='0';pianoVolumeSlider.max='400';pianoVolumeSlider.step='5';
 pianoVolumeSlider.value=String(Math.round(pianoVolume*100));
 pianoVolumeSlider.setAttribute('aria-label','Piano volume');
 pianoVolumeSlider.addEventListener('input',()=>{
